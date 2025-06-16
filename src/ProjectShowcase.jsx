@@ -116,7 +116,7 @@ export default function ProjectShowcase() {
             </a>
           </div>
           <a
-            href="#"
+            href="https://opensea.io/es/collection/mycomystic/overview?_gl=1*8gjtoi*_gcl_au*Nzg0MjIxOTEzLjE3NDgzNzMwMDE.*_ga*MTYyODMwNjQ0Mi4xNzQ4MzcyOTk3*_ga_9VSBF2K4BX*czE3NTAxMDE1ODckbzU2JGcxJHQxNzUwMTA3ODIyJGoxOCRsMCRoMA.."
             className="inline-block border border-[#FBECC1] px-8 py-3 rounded hover:bg-[#FBECC1] hover:text-black transition text-sm font-semibold"
           >
             MINT YOUR NFT
