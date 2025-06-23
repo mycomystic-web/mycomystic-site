@@ -1,18 +1,22 @@
-import { readContract } from '@wagmi/core';
-import { getAccount } from '@wagmi/core';
-import contractABI from './nftABI';
-
-const contractAddress = '0x0040F67debe231Eb2d8116eabb9Ff6ce214c7E94';
+import { getAccount, readContract } from '@wagmi/core';
+import { contractABI } from './nftABI';
+import { contractAddress } from './wagmiConfig';
 
 export async function checkNFTOwnership() {
   try {
-    const { address } = getAccount();
+    const account = getAccount();
+
+    // Verifica si está conectada la wallet
+    if (!account?.isConnected || !account?.address) {
+      console.warn('⚠️ Wallet not connected');
+      return false;
+    }
 
     const balance = await readContract({
       address: contractAddress,
       abi: contractABI,
       functionName: 'balanceOf',
-      args: [address],
+      args: [account.address],
     });
 
     return balance > 0n;
