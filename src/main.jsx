@@ -1,24 +1,25 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import ProjectShowcase from "./ProjectShowcase";
-import Roadmap from "./pages/Roadmap";
-import About from "./pages/About";
-import Contact from "./pages/Contact";
-import Team from "./pages/Team";
-import FAQs from "./pages/FAQs"; // si ya lo creamos
-
 import "./index.css";
+import App from "./pages/App";
+
+import "@rainbow-me/rainbowkit/styles.css";
+import { WagmiConfig } from "wagmi";
+import { config } from "./wagmi";
+import { RainbowKitProvider } from "@rainbow-me/rainbowkit";
+
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+
+const queryClient = new QueryClient();
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <BrowserRouter>
-    <Routes>
-      <Route path="/" element={<ProjectShowcase />} />
-      <Route path="/roadmap" element={<Roadmap />} />
-      <Route path="/about" element={<About />} />
-      <Route path="/contact" element={<Contact />} />
-      <Route path="/team" element={<Team />} />
-      <Route path="/faqs" element={<FAQs />} />
-    </Routes>
-  </BrowserRouter>
+  <React.StrictMode>
+    <QueryClientProvider client={queryClient}>
+      <WagmiConfig config={config}>
+        <RainbowKitProvider>
+          <App />
+        </RainbowKitProvider>
+      </WagmiConfig>
+    </QueryClientProvider>
+  </React.StrictMode>
 );
