@@ -7,11 +7,16 @@ import { motion } from "framer-motion";
 
 export default function ProjectShowcase() {
   const [message, setMessage] = useState("");
-  const { isConnected } = useAccount();
+  const { isConnected, address } = useAccount();
 
+
+  
   useEffect(() => {
-  const checkOwnership = async () => {
-    if (!isConnected || !address) return;
+  const verify = async () => {
+    if (!isConnected || !address) {
+      setMessage(""); // limpia mensaje si no hay wallet conectada
+      return;
+    }
 
     try {
       const hasNFT = await checkNFTOwnership();
@@ -27,8 +32,9 @@ export default function ProjectShowcase() {
     }
   };
 
-  checkOwnership();
-}, [isConnected, address]);
+  verify();
+}, [isConnected, address]); // <- se dispara cuando cambia la conexión o la wallet
+
 
 
 
