@@ -1,10 +1,18 @@
-export default async function handler(req, res) {
+export const config = {
+  runtime: 'edge',
+};
+
+export default async function handler(req) {
   if (req.method !== 'POST') {
-    return res.status(405).json({ error: 'Method Not Allowed' });
+    return new Response(JSON.stringify({ error: 'Method Not Allowed' }), {
+      status: 405,
+      headers: { 'Content-Type': 'application/json' },
+    });
   }
 
   try {
-    const { address } = await req.json(); // En Vercel edge runtime se usa req.json()
+    const { address } = await req.json();
+
     if (!address) {
       return new Response(JSON.stringify({ error: 'No wallet provided' }), {
         status: 400,
@@ -12,9 +20,9 @@ export default async function handler(req, res) {
       });
     }
 
-    console.log("✅ Wallet received:", address);
+    console.log("✅ Received wallet:", address);
 
-    // Simulamos guardado exitoso (sin usar fs)
+    // 🔁 Aquí podrías guardar en una base de datos o KV en producción
     return new Response(JSON.stringify({ success: true, new: true }), {
       status: 200,
       headers: { 'Content-Type': 'application/json' },
