@@ -1,16 +1,18 @@
-import fs from 'fs';
-import path from 'path';
+export async function saveWalletIfNew(address) {
+  try {
+    const res = await fetch('/api/save', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ address }),
+    });
 
-export function saveWalletIfNew(address) {
-  const filePath = path.resolve('public/raffle-data/mystic-participants.json');
-  let data = [];
-
-  if (fs.existsSync(filePath)) {
-    data = JSON.parse(fs.readFileSync(filePath, 'utf8'));
-  }
-
-  if (!data.includes(address)) {
-    data.push(address);
-    fs.writeFileSync(filePath, JSON.stringify(data, null, 2));
+    const data = await res.json();
+    if (data.success) {
+      console.log(data.new ? '✅ Wallet saved' : 'ℹ️ Wallet already registered');
+    } else {
+      console.error('❌ Save failed', data.error);
+    }
+  } catch (err) {
+    console.error('❌ Network error saving wallet:', err);
   }
 }
