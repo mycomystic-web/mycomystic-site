@@ -2,28 +2,35 @@ import { useEffect, useState } from "react";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { checkNFTOwnership } from "../lib/checkNFT";
 import { saveWalletIfNew } from "../lib/saveWallet";
-import { getAccount } from "@wagmi/core";
+import { getAccount, useAccount } from "wagmi";
 import { motion } from "framer-motion";
-
 
 export default function ProjectShowcase() {
   const [message, setMessage] = useState("");
+  const { isConnected } = useAccount();
 
   useEffect(() => {
     const checkOwnership = async () => {
-      const hasNFT = await checkNFTOwnership();
-      const { address } = getAccount();
+      if (!isConnected) return;
 
-      if (hasNFT && address) {
-        saveWalletIfNew(address); // ✅ Guardar si tiene NFT
-        setMessage("✅ You’re in the Mystic Club!");
-      } else {
-        setMessage("❌ You don’t own a MycoMystic NFT.");
+      try {
+        const hasNFT = await checkNFTOwnership();
+        const { address } = getAccount();
+
+        if (hasNFT && address) {
+          await saveWalletIfNew(address);
+          setMessage("✅ You’re in the Mystic Club!");
+        } else {
+          setMessage("❌ You don’t own a MycoMystic NFT.");
+        }
+      } catch (err) {
+        console.error("Error checking NFT ownership:", err);
+        setMessage("⚠️ Could not verify NFT ownership.");
       }
     };
 
     checkOwnership();
-  }, []);
+  }, [isConnected]);
 
   const textShadow =
     "2px 2px 0 #000, -2px 2px 0 #000, 2px -2px 0 #000, -2px -2px 0 #000";
@@ -68,27 +75,17 @@ export default function ProjectShowcase() {
 
         {/* JOIN & WIN */}
         <div>
-          <h2
-            className="text-xl font-bold mb-4 text-[#66b2ff]"
-            style={{ textShadow }}
-          >
+          <h2 className="text-xl font-bold mb-4 text-[#66b2ff]" style={{ textShadow }}>
             🎁 JOIN & WIN
           </h2>
-          <p
-            className="text-base leading-relaxed text-[#99ccff]"
-            style={{ textShadow }}
-          >
-            Holding any NFT from the MycoMystic network grants access to
-            exclusive raffles and drops. Lock in and unlock rewards.
+          <p className="text-base leading-relaxed text-[#99ccff]" style={{ textShadow }}>
+            Holding any NFT from the MycoMystic network grants access to exclusive raffles and drops. Lock in and unlock rewards.
           </p>
         </div>
 
         {/* OUR DIMENSIONS */}
         <div>
-          <h2
-            className="text-xl font-bold mb-6 text-[#66b2ff]"
-            style={{ textShadow }}
-          >
+          <h2 className="text-xl font-bold mb-6 text-[#66b2ff]" style={{ textShadow }}>
             🔮 OUR DIMENSIONS
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-10 text-sm">
@@ -99,12 +96,8 @@ export default function ProjectShowcase() {
               ["Mystic Ecosystem", "Built to grow with new apps, games, and collaborations."]
             ].map(([title, desc], i) => (
               <div key={i} className="flex flex-col items-center text-[#99ccff]">
-                <p className="font-semibold mb-1" style={{ textShadow }}>
-                  {title}
-                </p>
-                <p className="text-sm leading-snug" style={{ textShadow }}>
-                  {desc}
-                </p>
+                <p className="font-semibold mb-1" style={{ textShadow }}>{title}</p>
+                <p className="text-sm leading-snug" style={{ textShadow }}>{desc}</p>
               </div>
             ))}
           </div>
@@ -112,86 +105,40 @@ export default function ProjectShowcase() {
 
         {/* ROADMAP */}
         <div>
-          <h2
-            className="text-xl font-bold mb-4 text-[#66b2ff]"
-            style={{ textShadow }}
-          >
+          <h2 className="text-xl font-bold mb-4 text-[#66b2ff]" style={{ textShadow }}>
             📍 ROADMAP 2025
           </h2>
           <ul className="space-y-4 text-[#99ccff] text-left">
-            <li style={{ textShadow }}>
-              <strong>Q2:</strong> Official launch of MycoMystic and first NFT
-              collection. Wallet connection system live.
-            </li>
-            <li style={{ textShadow }}>
-              <strong>Q3:</strong> Daily raffles activated. New drops like
-              ByteBeings and MysticKeys begin.
-            </li>
-            <li style={{ textShadow }}>
-              <strong>Q4:</strong> Internal marketplace and NFT tier system.
-              Real-world rewards introduced.
-            </li>
-            <li style={{ textShadow }}>
-              <strong>2026+:</strong> Global expansion with mobile apps, collab
-              drops and live events.
-            </li>
+            <li style={{ textShadow }}><strong>Q2:</strong> Launch of MycoMystic and first NFT collection. Wallet verification live.</li>
+            <li style={{ textShadow }}><strong>Q3:</strong> Daily raffles go live. New drops like ByteBeings and MysticKeys begin.</li>
+            <li style={{ textShadow }}><strong>Q4:</strong> Marketplace + NFT tier system. Real-world rewards introduced.</li>
+            <li style={{ textShadow }}><strong>2026+:</strong> Expansion: mobile apps, collabs and live events.</li>
           </ul>
         </div>
 
         {/* FAQ */}
         <div>
-          <h2
-            className="text-xl font-bold mb-4 text-[#66b2ff]"
-            style={{ textShadow }}
-          >
+          <h2 className="text-xl font-bold mb-4 text-[#66b2ff]" style={{ textShadow }}>
             ❓ FREQUENTLY ASKED QUESTIONS
           </h2>
           <div className="space-y-6 text-[#99ccff] text-left">
-            <div>
-              <p className="font-semibold" style={{ textShadow }}>
-                What is MycoMystic?
-              </p>
-              <p style={{ textShadow }}>
-                A Web3-powered NFT ecosystem offering real raffles, evolving
-                stories and real-world perks for holders.
-              </p>
-            </div>
-            <div>
-              <p className="font-semibold" style={{ textShadow }}>
-                How do I join a raffle?
-              </p>
-              <p style={{ textShadow }}>
-                Hold at least one NFT from any MycoMystic collection and connect
-                your wallet to get access.
-              </p>
-            </div>
-            <div>
-              <p className="font-semibold" style={{ textShadow }}>
-                Where can I buy NFTs?
-              </p>
-              <p style={{ textShadow }}>
-                On OpenSea or during our official minting events announced on X
-                and Discord.
-              </p>
-            </div>
-            <div>
-              <p className="font-semibold" style={{ textShadow }}>
-                What kind of prizes are raffled?
-              </p>
-              <p style={{ textShadow }}>
-                From ETH and NFTs to merchandise, exclusive passes, and
-                one-of-a-kind experiences.
-              </p>
-            </div>
+            {[
+              ["What is MycoMystic?", "A Web3-powered NFT ecosystem offering real raffles, evolving stories and perks for holders."],
+              ["How do I join a raffle?", "Hold at least one MycoMystic NFT and connect your wallet."],
+              ["Where can I buy NFTs?", "On OpenSea or during our official drops (announced on X and Discord)."],
+              ["What kind of prizes?", "ETH, NFTs, merch, event access and unique experiences."]
+            ].map(([q, a], i) => (
+              <div key={i}>
+                <p className="font-semibold" style={{ textShadow }}>{q}</p>
+                <p style={{ textShadow }}>{a}</p>
+              </div>
+            ))}
           </div>
         </div>
 
         {/* TEAM */}
         <div>
-          <h2
-            className="text-xl font-bold mb-4 text-[#66b2ff]"
-            style={{ textShadow }}
-          >
+          <h2 className="text-xl font-bold mb-4 text-[#66b2ff]" style={{ textShadow }}>
             👥 THE TEAM
           </h2>
           <div className="space-y-6 text-[#99ccff] text-left">
@@ -200,8 +147,7 @@ export default function ProjectShowcase() {
                 Julio (aka JulioMystic)
               </p>
               <p style={{ textShadow }}>
-                Founder and creative mind behind MycoMystic. Builder of immersive
-                Web3 experiences and NFT brands.
+                Founder and creative mind behind MycoMystic. Builder of immersive Web3 experiences and NFT brands.
               </p>
             </div>
             <div>
@@ -209,8 +155,7 @@ export default function ProjectShowcase() {
                 Global Collaborators
               </p>
               <p style={{ textShadow }}>
-                Our team is expanding with artists, devs, and visionaries from
-                around the world.
+                Artists, developers and visionaries from around the world.
               </p>
             </div>
           </div>
@@ -218,14 +163,11 @@ export default function ProjectShowcase() {
 
         {/* CONTACT */}
         <div>
-          <h2
-            className="text-xl font-bold mb-4 text-[#66b2ff]"
-            style={{ textShadow }}>
+          <h2 className="text-xl font-bold mb-4 text-[#66b2ff]" style={{ textShadow }}>
             ✉️ CONTACT
           </h2>
           <p className="text-[#99ccff] text-left" style={{ textShadow }}>
-            For collaborations, media, or support contact us at:
-            <br />
+            For collabs, press or support: <br />
             <a
               href="mailto:mycomysticpro@gmail.com"
               className="underline text-[#66b2ff]"
@@ -234,7 +176,7 @@ export default function ProjectShowcase() {
               mycomysticpro@gmail.com
             </a>
             <br />
-            Or reach out via Discord and X (Twitter).
+            Or find us on Discord and X (Twitter).
           </p>
         </div>
 
@@ -249,6 +191,7 @@ export default function ProjectShowcase() {
               key={i}
               href={href}
               target="_blank"
+              rel="noopener noreferrer"
               className="bg-[#0080ff] hover:bg-[#66b2ff] text-white font-semibold px-6 py-2 rounded-full shadow-md transition flex items-center gap-2"
             >
               <img src={icon} alt={label} className="h-5 w-5" />
