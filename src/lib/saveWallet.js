@@ -8,9 +8,9 @@ export async function saveWalletIfNew(address) {
 
     const data = await res.json();
     if (data.success) {
-      console.log(data.new ? '✅ Wallet saved' : 'ℹ️ Wallet already registered');
+      console.log(data.new ? '✅ Wallet saved' : 'ℹ️ Already registered');
     } else {
-      console.error('❌ Save failed', data.error);
+      console.error('❌ Save error:', data.error);
     }
   } catch (err) {
     console.error('❌ Network error saving wallet:', err);
