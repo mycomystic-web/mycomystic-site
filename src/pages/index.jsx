@@ -10,27 +10,28 @@ export default function ProjectShowcase() {
   const { isConnected } = useAccount();
 
   useEffect(() => {
-    const checkOwnership = async () => {
-      if (!isConnected) return;
+  const checkOwnership = async () => {
+    if (!isConnected) return; // ⬅️ Esto bloquea el error
 
-      try {
-        const hasNFT = await checkNFTOwnership();
-        const { address } = getAccount();
+    try {
+      const hasNFT = await checkNFTOwnership();
+      const { address } = getAccount();
 
-        if (hasNFT && address) {
-          await saveWalletIfNew(address);
-          setMessage("✅ You’re in the Mystic Club!");
-        } else {
-          setMessage("❌ You don’t own a MycoMystic NFT.");
-        }
-      } catch (err) {
-        console.error("Error checking NFT ownership:", err);
-        setMessage("⚠️ Could not verify NFT ownership.");
+      if (hasNFT && address) {
+        await saveWalletIfNew(address);
+        setMessage("✅ You’re in the Mystic Club!");
+      } else {
+        setMessage("❌ You don’t own a MycoMystic NFT.");
       }
-    };
+    } catch (err) {
+      console.error("Error checking NFT ownership:", err);
+      setMessage("⚠️ Could not verify NFT ownership.");
+    }
+  };
 
-    checkOwnership();
-  }, [isConnected]);
+  checkOwnership();
+}, [isConnected]); // ← Solo se ejecuta cuando hay conexión
+
 
   const textShadow =
     "2px 2px 0 #000, -2px 2px 0 #000, 2px -2px 0 #000, -2px -2px 0 #000";
