@@ -9,31 +9,30 @@ export default function ProjectShowcase() {
   const [message, setMessage] = useState("");
   const { isConnected, address } = useAccount();
 
-
-  
   useEffect(() => {
-  const verify = async () => {
-    if (!isConnected || !address) {
-      setMessage(""); // limpia mensaje si no hay wallet conectada
-      return;
-    }
-
-    try {
-      const hasNFT = await checkNFTOwnership();
-      if (hasNFT) {
-        await saveWalletIfNew(address);
-        setMessage("✅ You’re in the Mystic Club!");
-      } else {
-        setMessage("❌ You don’t own a MycoMystic NFT.");
+    const verify = async () => {
+      if (!isConnected || !address) {
+        setMessage("");
+        return;
       }
-    } catch (err) {
-      console.error("Error checking NFT ownership:", err);
-      setMessage("⚠️ Could not verify NFT ownership.");
-    }
-  };
 
-  verify();
-}, [isConnected, address]); // <- se dispara cuando cambia la conexión o la wallet
+      try {
+        const hasNFT = await checkNFTOwnership();
+        if (hasNFT) {
+          await saveWalletIfNew(address);
+          setMessage("✅ You’re in the Mystic Club!");
+        } else {
+          setMessage("❌ You don’t own a MycoMystic NFT.");
+        }
+      } catch (err) {
+        console.error("Error checking NFT ownership:", err);
+        setMessage("⚠️ Could not verify NFT ownership.");
+      }
+    };
+
+    verify();
+  }, [isConnected, address]);
+
 
 
 
