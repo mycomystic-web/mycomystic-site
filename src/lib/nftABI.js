@@ -1,3 +1,6 @@
+// src/lib/nftABI.js
+
+// ✅ ABI mínimo para verificar balance de NFTs (función balanceOf)
 export const contractABI = [
   {
     "inputs": [

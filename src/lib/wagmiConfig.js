@@ -1,3 +1,4 @@
+// ✅ wagmiConfig.js
 import { configureChains, createConfig } from 'wagmi';
 import { getDefaultWallets } from '@rainbow-me/rainbowkit';
 import { publicProvider } from 'wagmi/providers/public';
@@ -10,7 +11,6 @@ const { chains, publicClient } = configureChains(
 
 const { connectors } = getDefaultWallets({
   appName: 'MycoMystic',
-  projectId: 'mycomystic',
   chains,
 });
 
