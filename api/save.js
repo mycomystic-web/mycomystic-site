@@ -1,37 +1,32 @@
-export const config = {
-  runtime: 'edge',
-};
-
-export default async function handler(req) {
+export default async function handler(req, res) {
   if (req.method !== 'POST') {
-    return new Response(JSON.stringify({ error: 'Method Not Allowed' }), {
-      status: 405,
-      headers: { 'Content-Type': 'application/json' },
-    });
+    res.status(405).json({ error: 'Method not allowed' });
+    return;
   }
 
-  try {
-    const { address } = await req.json();
+  let body = "";
 
-    if (!address) {
-      return new Response(JSON.stringify({ error: 'No wallet provided' }), {
-        status: 400,
-        headers: { 'Content-Type': 'application/json' },
-      });
+  req.on('data', chunk => {
+    body += chunk;
+  });
+
+  req.on('end', () => {
+    try {
+      const data = JSON.parse(body);
+      const { address } = data;
+
+      if (!address) {
+        res.status(400).json({ error: 'No wallet provided' });
+        return;
+      }
+
+      console.log("✅ Wallet received:", address);
+
+      // Simulación de guardado
+      res.status(200).json({ success: true, new: true });
+    } catch (error) {
+      console.error('❌ Parse error:', error);
+      res.status(500).json({ error: 'Invalid JSON' });
     }
-
-    console.log("✅ Received wallet:", address);
-
-    // 🔁 Aquí podrías guardar en una base de datos o KV en producción
-    return new Response(JSON.stringify({ success: true, new: true }), {
-      status: 200,
-      headers: { 'Content-Type': 'application/json' },
-    });
-  } catch (err) {
-    console.error("❌ API error:", err);
-    return new Response(JSON.stringify({ error: 'Server error' }), {
-      status: 500,
-      headers: { 'Content-Type': 'application/json' },
-    });
-  }
+  });
 }
