@@ -1,27 +1,25 @@
 import { configureChains, createConfig } from 'wagmi';
-import { publicProvider } from 'wagmi/providers/public';
 import { getDefaultWallets } from '@rainbow-me/rainbowkit';
+import { publicProvider } from 'wagmi/providers/public';
+import { Chain } from 'wagmi';
 
-const base = {
+// ✅ Red BASE configurada manualmente (ya que no viene incluida en wagmi v1.2.2)
+export const base = {
   id: 8453,
   name: 'Base',
   network: 'base',
   nativeCurrency: {
     decimals: 18,
-    name: 'Base',
+    name: 'Ethereum',
     symbol: 'ETH',
   },
   rpcUrls: {
-    default: {
-      http: ['https://mainnet.base.org'],
-    },
+    default: { http: ['https://mainnet.base.org'] },
   },
   blockExplorers: {
-    default: {
-      name: 'Basescan',
-      url: 'https://basescan.org',
-    },
+    default: { name: 'Basescan', url: 'https://basescan.org' },
   },
+  testnet: false,
 };
 
 const { chains, publicClient } = configureChains(
@@ -40,6 +38,6 @@ export const config = createConfig({
   publicClient,
 });
 
-export { chains };
-
 export const contractAddress = '0x0040F67debe231Eb2d8116eabb9Ff6ce214c7E94';
+
+export { chains }; // ✅ agrega esto
