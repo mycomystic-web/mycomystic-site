@@ -1,17 +1,23 @@
 import { useEffect, useState } from "react";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
-import { checkNFTOwnership } from "./lib/checkNFT";
+import { checkNFTOwnership } from "../lib/checkNFT";
+import { saveWalletIfNew } from "../lib/saveWallet";
+import { getAccount } from "@wagmi/core";
 import { motion } from "framer-motion";
+
 
 export default function ProjectShowcase() {
   const [message, setMessage] = useState("");
 
   useEffect(() => {
     const checkOwnership = async () => {
-      const result = await checkNFTOwnership();
-      if (result?.hasNFT) {
+      const hasNFT = await checkNFTOwnership();
+      const { address } = getAccount();
+
+      if (hasNFT && address) {
+        saveWalletIfNew(address); // ✅ Guardar si tiene NFT
         setMessage("✅ You’re in the Mystic Club!");
-      } else if (result?.hasNFT === false) {
+      } else {
         setMessage("❌ You don’t own a MycoMystic NFT.");
       }
     };
