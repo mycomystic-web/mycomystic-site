@@ -11,13 +11,11 @@ export default function ProjectShowcase() {
 
   useEffect(() => {
   const checkOwnership = async () => {
-    if (!isConnected) return; // ⬅️ Esto bloquea el error
+    if (!isConnected || !address) return;
 
     try {
       const hasNFT = await checkNFTOwnership();
-      const { address } = getAccount();
-
-      if (hasNFT && address) {
+      if (hasNFT) {
         await saveWalletIfNew(address);
         setMessage("✅ You’re in the Mystic Club!");
       } else {
@@ -30,7 +28,8 @@ export default function ProjectShowcase() {
   };
 
   checkOwnership();
-}, [isConnected]); // ← Solo se ejecuta cuando hay conexión
+}, [isConnected, address]);
+
 
 
   const textShadow =
