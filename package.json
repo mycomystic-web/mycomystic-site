@@ -12,6 +12,7 @@
     "@wagmi/core": "^1.2.2",
     "axios": "^1.10.0",
     "framer-motion": "^12.17.3",
+    "googleapis": "^150.0.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^7.6.2",
