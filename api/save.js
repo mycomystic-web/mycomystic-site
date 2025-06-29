@@ -1,62 +1,48 @@
 import { google } from 'googleapis';
 
+// Endpoint handler
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
-    res.status(405).json({ error: 'Method not allowed' });
-    return;
+    return res.status(405).json({ error: 'Method not allowed' });
+  }
+
+  const { wallet } = req.body;
+
+  if (!wallet) {
+    return res.status(400).json({ error: 'Wallet address is required' });
   }
 
   try {
-    // Leer dirección de wallet del cuerpo
-    const { address } = req.body;
-
-    if (!address) {
-      res.status(400).json({ error: 'No wallet provided' });
-      return;
-    }
-
-    // Importar claves desde variables de entorno
-    const credentials = JSON.parse(process.env.GOOGLE_SERVICE_ACCOUNT_JSON);
-    const spreadsheetId = process.env.GOOGLE_SHEET_ID;
-
-    // Auth
     const auth = new google.auth.GoogleAuth({
-      credentials,
+      credentials: {
+        type: process.env.GOOGLE_TYPE,
+        project_id: process.env.GOOGLE_PROJECT_ID,
+        private_key_id: process.env.GOOGLE_PRIVATE_KEY_ID,
+        private_key: process.env.GOOGLE_PRIVATE_KEY.replace(/\\n/g, '\n'),
+        client_email: process.env.GOOGLE_CLIENT_EMAIL,
+        client_id: process.env.GOOGLE_CLIENT_ID,
+        auth_uri: process.env.GOOGLE_AUTH_URI,
+        token_uri: process.env.GOOGLE_TOKEN_URI,
+        auth_provider_x509_cert_url: process.env.GOOGLE_AUTH_PROVIDER_X509_CERT_URL,
+        client_x509_cert_url: process.env.GOOGLE_CLIENT_X509_CERT_URL,
+      },
       scopes: ['https://www.googleapis.com/auth/spreadsheets'],
     });
 
     const sheets = google.sheets({ version: 'v4', auth });
 
-    // Verificar si la wallet ya está registrada
-    const read = await sheets.spreadsheets.values.get({
-      spreadsheetId,
-      range: 'A:A',
-    });
-
-    const rows = read.data.values || [];
-    const exists = rows.some(row => row[0] === address);
-
-    if (exists) {
-      return res.status(200).json({ success: true, new: false });
-    }
-
-    // Agregar nueva wallet + fecha
-    const now = new Date().toISOString().split('T')[0];
-
-    await sheets.spreadsheets.values.append({
-      spreadsheetId,
-      range: 'A:B',
-      valueInputOption: 'RAW',
+    const response = await sheets.spreadsheets.values.append({
+      spreadsheetId: '1JiPzgHLzc2Y8UiPdYL82S4ls-3rq9NtOEk289zrdAO8',
+      range: 'Hoja 1!A:f',
+      valueInputOption: 'USER_ENTERED',
       requestBody: {
-        values: [[address, now]],
+        values: [[wallet, new Date().toLocaleString()]],
       },
     });
 
-    console.log('✅ Wallet saved to Google Sheets:', address);
-    res.status(200).json({ success: true, new: true });
-
+    return res.status(200).json({ message: 'Wallet saved', data: response.data });
   } catch (error) {
-    console.error('❌ API Error:', error);
-    res.status(500).json({ error: 'Server error' });
+    console.error(error);
+    return res.status(500).json({ error: 'Error saving wallet' });
   }
 }
