@@ -1,15 +1,14 @@
 import { google } from 'googleapis';
 
-// Endpoint handler
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
-    return res.status(405).json({ error: 'Method not allowed' });
+    return res.status(405).json({ success: false, error: 'Method not allowed' });
   }
 
   const { wallet } = req.body;
 
   if (!wallet) {
-    return res.status(400).json({ error: 'Wallet address is required' });
+    return res.status(400).json({ success: false, error: 'Wallet address is required' });
   }
 
   try {
@@ -33,16 +32,16 @@ export default async function handler(req, res) {
 
     const response = await sheets.spreadsheets.values.append({
       spreadsheetId: '1JiPzgHLzc2Y8UiPdYL82S4ls-3rq9NtOEk289zrdAO8',
-      range: 'Hoja 1!A:f',
+      range: 'Hoja 1!A:B', // ✅ Fijo
       valueInputOption: 'USER_ENTERED',
       requestBody: {
         values: [[wallet, new Date().toLocaleString()]],
       },
     });
 
-    return res.status(200).json({ message: 'Wallet saved', data: response.data });
+    return res.status(200).json({ success: true, new: true, message: 'Wallet saved', data: response.data });
   } catch (error) {
     console.error('GOOGLE API ERROR:', error);
-    return res.status(500).json({ error: 'Error saving wallet' });
+    return res.status(500).json({ success: false, error: 'Error saving wallet' });
   }
 }
