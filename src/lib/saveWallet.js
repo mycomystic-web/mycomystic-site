@@ -3,7 +3,7 @@ export async function saveWalletIfNew(address) {
     const res = await fetch('/api/save', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ address }),
+      body: JSON.stringify({ wallet: address }), // 👈 Correcto
     });
 
     const data = await res.json();
