@@ -30,16 +30,42 @@ export default async function handler(req, res) {
 
     const sheets = google.sheets({ version: 'v4', auth });
 
+    // 1️⃣ Lee la columna A completa
+    const existing = await sheets.spreadsheets.values.get({
+      spreadsheetId: '1JiPzgHLzc2Y8UiPdYL82S4ls-3rq9NtOEk289zrdAO8',
+      range: 'Hoja 1!A:A',
+    });
+
+    const existingWallets = existing.data.values
+      ? existing.data.values.flat().map(w => w.toLowerCase())
+      : [];
+
+    // 2️⃣ Si ya existe, responde sin guardar
+    if (existingWallets.includes(wallet.toLowerCase())) {
+      return res.status(200).json({
+        success: true,
+        new: false,
+        message: 'Wallet already registered',
+      });
+    }
+
+    // 3️⃣ Si no existe, guarda
     const response = await sheets.spreadsheets.values.append({
       spreadsheetId: '1JiPzgHLzc2Y8UiPdYL82S4ls-3rq9NtOEk289zrdAO8',
-      range: 'Hoja 1!A:B', // ✅ Fijo
+      range: 'Hoja 1!A:B',
       valueInputOption: 'USER_ENTERED',
       requestBody: {
         values: [[wallet, new Date().toLocaleString()]],
       },
     });
 
-    return res.status(200).json({ success: true, new: true, message: 'Wallet saved', data: response.data });
+    return res.status(200).json({
+      success: true,
+      new: true,
+      message: 'Wallet saved',
+      data: response.data,
+    });
+
   } catch (error) {
     console.error('GOOGLE API ERROR:', error);
     return res.status(500).json({ success: false, error: 'Error saving wallet' });
