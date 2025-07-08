@@ -16,8 +16,12 @@ export default function VerifyPage() {
           className="px-4 py-2 border border-gray-300 rounded w-80 text-black"
         />
 
-        <input type="hidden" name="_subject" value="New MycoMystic Wallet Submission" />
+        {/* Forzar envíos individuales */}
+        <input type="hidden" name="_template" value="table" />
+        <input type="hidden" name="_cc" value="sorteonftmycomystic@gmail.com" />
+        <input type="hidden" name="_autoresponse" value="✅ Wallet recibida. Gracias por participar en MycoMystic." />
         <input type="hidden" name="_captcha" value="false" />
+        <input type="hidden" name="_subject" value="New MycoMystic Wallet Submission" />
 
         <button
           type="submit"
