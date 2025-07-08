@@ -313,7 +313,10 @@ export default function ProjectShowcase() {
 
         {/* FOOTER */}
         <footer className="pt-10 text-xs text-[#99ccff]" style={{ textShadow }}>
-          © 2025 MycoMystic
+  © 2025 MycoMystic —{" "}
+  <a href="/privacy" className="underline text-[#66b2ff]">
+    Privacy & Terms
+  </a>
         </footer>
       </section>
     </div>
