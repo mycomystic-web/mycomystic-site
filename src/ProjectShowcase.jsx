@@ -2,10 +2,12 @@ import { useEffect, useState } from "react";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { checkNFTOwnership } from "./lib/checkNFT";
 import { useAccount } from "wagmi";
+import { useNavigate } from "react-router-dom";
 
 export default function ProjectShowcase() {
   const [hasAccess, setHasAccess] = useState(false);
   const { isConnected, address } = useAccount();
+  const navigate = useNavigate();
 
   const textShadow =
     "2px 2px 0 #000, -2px 2px 0 #000, 2px -2px 0 #000, -2px -2px 0 #000";
@@ -25,7 +27,7 @@ export default function ProjectShowcase() {
 
   const handleEnter = () => {
     if (hasAccess) {
-      window.location.href = "/verify"; // ✅ VITE puro, sin next/router
+      navigate("/verify"); // ✅ Ahora usa Router real, no window.location.href
     }
   };
 
@@ -310,10 +312,7 @@ export default function ProjectShowcase() {
         </div>
 
         {/* FOOTER */}
-        <footer
-          className="pt-10 text-xs text-[#99ccff]"
-          style={{ textShadow }}
-        >
+        <footer className="pt-10 text-xs text-[#99ccff]" style={{ textShadow }}>
           © 2025 MycoMystic
         </footer>
       </section>
