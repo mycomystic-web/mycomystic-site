@@ -2,12 +2,10 @@ import { useEffect, useState } from "react";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { checkNFTOwnership } from "../../lib/checkNFT";
 import { useAccount } from "wagmi";
-import { useRouter } from "next/router";
 
 export default function ProjectShowcase() {
   const [hasAccess, setHasAccess] = useState(false);
   const { isConnected, address } = useAccount();
-  const router = useRouter();
 
   const textShadow =
     "2px 2px 0 #000, -2px 2px 0 #000, 2px -2px 0 #000, -2px -2px 0 #000";
@@ -27,7 +25,7 @@ export default function ProjectShowcase() {
 
   const handleEnter = () => {
     if (hasAccess) {
-      router.push("/verify");
+      window.location.href = "/verify"; // ✅ VITE puro, sin next/router
     }
   };
 
