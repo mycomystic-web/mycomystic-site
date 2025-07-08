@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
-import { checkNFTOwnership } from "../../lib/checkNFT";
+import { checkNFTOwnership } from "./lib/checkNFT";
 import { useAccount } from "wagmi";
 
 export default function ProjectShowcase() {
