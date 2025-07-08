@@ -1,35 +1,9 @@
-import { useEffect, useState } from "react";
+import { motion } from "framer-motion";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
-import { checkNFTOwnership } from "../../lib/checkNFT";
-import { useAccount } from "wagmi";
-import { useRouter } from "next/router";
 
 export default function ProjectShowcase() {
-  const [hasAccess, setHasAccess] = useState(false);
-  const { isConnected, address } = useAccount();
-  const router = useRouter();
-
   const textShadow =
     "2px 2px 0 #000, -2px 2px 0 #000, 2px -2px 0 #000, -2px -2px 0 #000";
-
-  useEffect(() => {
-    const verify = async () => {
-      if (!isConnected || !address) {
-        setHasAccess(false);
-        return;
-      }
-      const hasNFT = await checkNFTOwnership(address);
-      setHasAccess(hasNFT);
-    };
-
-    verify();
-  }, [isConnected, address]);
-
-  const handleEnter = () => {
-    if (hasAccess) {
-      router.push("/verify");
-    }
-  };
 
   return (
     <div
@@ -42,6 +16,7 @@ export default function ProjectShowcase() {
       }}
     >
       <section className="max-w-3xl space-y-16">
+
         {/* HERO */}
         <div>
           <h1
@@ -62,17 +37,12 @@ export default function ProjectShowcase() {
         {/* CONNECT + RAFFLE */}
         <div className="flex flex-col items-center space-y-4">
           <ConnectButton />
-          <button
-            onClick={handleEnter}
-            disabled={!hasAccess}
-            className={`font-semibold px-6 py-2 rounded-full shadow-md transition flex items-center gap-2 ${
-              hasAccess
-                ? "bg-green-600 hover:bg-green-700 cursor-pointer"
-                : "bg-red-600 cursor-not-allowed"
-            }`}
+          <a
+            href="/raffle"
+            className="bg-[#0080ff] hover:bg-[#66b2ff] text-white font-semibold px-6 py-2 rounded-full shadow-md transition flex items-center gap-2"
           >
             🎟️ Enter Raffle
-          </button>
+          </a>
         </div>
 
         {/* JOIN & WIN */}
@@ -102,27 +72,12 @@ export default function ProjectShowcase() {
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-10 text-sm">
             {[
-              [
-                "Multiple NFT Projects",
-                "Each with a unique theme, story and gateway to benefits.",
-              ],
-              [
-                "Legendary Giveaways",
-                "From ETH to experiences—our drops will surprise you.",
-              ],
-              [
-                "Lore-Driven Access",
-                "Storytelling that evolves—and rewards—engaged users.",
-              ],
-              [
-                "Mystic Ecosystem",
-                "Built to grow with new apps, games, and collaborations.",
-              ],
+              ["Multiple NFT Projects", "Each with a unique theme, story and gateway to benefits."],
+              ["Legendary Giveaways", "From ETH to experiences—our drops will surprise you."],
+              ["Lore-Driven Access", "Storytelling that evolves—and rewards—engaged users."],
+              ["Mystic Ecosystem", "Built to grow with new apps, games, and collaborations."]
             ].map(([title, desc], i) => (
-              <div
-                key={i}
-                className="flex flex-col items-center text-[#99ccff]"
-              >
+              <div key={i} className="flex flex-col items-center text-[#99ccff]">
                 <p className="font-semibold mb-1" style={{ textShadow }}>
                   {title}
                 </p>
@@ -279,30 +234,17 @@ export default function ProjectShowcase() {
           </p>
         </div>
 
-        {/* SOCIAL BUTTONS */}
+        {/* SOCIAL BUTTONS (BLUE STYLE) */}
         <div className="flex flex-wrap justify-center gap-4 mt-6">
           {[
-            {
-              href: "https://discord.gg/CJqYVCUw",
-              icon: "/icons/discord.svg",
-              label: "Discord",
-            },
-            {
-              href: "https://x.com/mycomysticpro",
-              icon: "/icons/x.svg",
-              label: "X",
-            },
-            {
-              href: "https://www.instagram.com/mycomysticpro/",
-              icon: "/icons/instagram.svg",
-              label: "Instagram",
-            },
+            { href: "https://discord.gg/CJqYVCUw", icon: "/icons/discord.svg", label: "Discord" },
+            { href: "https://x.com/mycomysticpro", icon: "/icons/x.svg", label: "X" },
+            { href: "https://www.instagram.com/mycomysticpro/", icon: "/icons/instagram.svg", label: "Instagram" },
           ].map(({ href, icon, label }, i) => (
             <a
               key={i}
               href={href}
               target="_blank"
-              rel="noopener noreferrer"
               className="bg-[#0080ff] hover:bg-[#66b2ff] text-white font-semibold px-6 py-2 rounded-full shadow-md transition flex items-center gap-2"
             >
               <img src={icon} alt={label} className="h-5 w-5" />
@@ -312,10 +254,7 @@ export default function ProjectShowcase() {
         </div>
 
         {/* FOOTER */}
-        <footer
-          className="pt-10 text-xs text-[#99ccff]"
-          style={{ textShadow }}
-        >
+        <footer className="pt-10 text-xs text-[#99ccff]" style={{ textShadow }}>
           © 2025 MycoMystic
         </footer>
       </section>
