@@ -1,8 +1,7 @@
-// src/App.jsx
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import ProjectShowcase from "../ProjectShowcase";
-import PrivacyPage from "./pages/privacy";
-import VerifyPage from "./pages/verify";
+import PrivacyPage from "./privacy";
+import VerifyPage from "./verify";
 
 export default function App() {
   return (
