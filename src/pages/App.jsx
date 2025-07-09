@@ -1,7 +1,15 @@
-import ProjectShowcase from "../ProjectShowcase"; // <- ruta según tu árbol
+// src/pages/App.jsx
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import ProjectShowcase from "../ProjectShowcase";
+import PrivacyPage from "./privacy";
 
-function App() {
-  return <ProjectShowcase />;
+export default function App() {
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<ProjectShowcase />} />
+        <Route path="/privacy" element={<PrivacyPage />} />
+      </Routes>
+    </BrowserRouter>
+  );
 }
-
-export default App;
