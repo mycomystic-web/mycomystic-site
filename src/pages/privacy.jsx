@@ -1,45 +1,50 @@
-export default function Privacy() {
+// src/pages/privacy.jsx
+export default function PrivacyPage() {
+  const textShadow =
+    "2px 2px 0 #000, -2px 2px 0 #000, 2px -2px 0 #000, -2px -2px 0 #000";
+
   return (
-    <div className="min-h-screen flex items-center justify-center bg-black text-white px-6 py-20 text-left">
-      <div className="max-w-3xl space-y-8">
-        <h1 className="text-3xl font-bold text-[#66b2ff]">
+    <div
+      className="min-h-screen px-8 py-20 text-[#99ccff] font-serif"
+      style={{
+        backgroundColor: "#000",
+        textShadow,
+      }}
+    >
+      <div className="max-w-3xl mx-auto space-y-6">
+        <h1 className="text-4xl font-bold mb-6 text-[#66b2ff]">
           Privacy Policy & Terms
         </h1>
 
         <p>
-          Welcome to MycoMystic. By using this site you agree to our policies and rules.
-          All wallet addresses submitted for raffle participation are stored securely
-          and are not shared with third parties.
+          MycoMystic values your privacy. We only collect wallet addresses that
+          you provide voluntarily when participating in our raffles.
         </p>
 
         <p>
-          Our database is updated every 30 days. Whenever we announce a new raffle on
-          any official channel, all holders must reconnect their wallet to participate.
+          By submitting your wallet, you agree to our raffle rules and terms.
+          You understand that your wallet must hold at least one valid
+          MycoMystic NFT to qualify.
         </p>
 
         <p>
-          The user is solely responsible for the accuracy of their wallet address and
-          for maintaining control over their NFT to be eligible for any raffle.
+          All wallet data is handled securely. Every 30 days, our database is
+          refreshed. When we announce a new raffle, you must reconnect your
+          wallet if you wish to participate.
         </p>
 
         <p>
-          We reserve the right to update these terms at any time. Continued use of
-          MycoMystic means you accept any changes. Please check this page regularly.
-        </p>
-
-        <p>
-          For questions, contact us at{" "}
+          For any questions, please contact us at{" "}
           <a
             href="mailto:mycomysticpro@gmail.com"
             className="underline text-[#66b2ff]"
           >
             mycomysticpro@gmail.com
-          </a>.
+          </a>
+          .
         </p>
 
-        <p className="text-xs text-gray-400">
-          © 2025 MycoMystic — All Rights Reserved.
-        </p>
+        <p>Last updated: 2025</p>
       </div>
     </div>
   );
