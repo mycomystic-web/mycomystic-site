@@ -1,33 +1,37 @@
-// src/lib/checkNFT.js
-import { getAccount, readContract } from '@wagmi/core';
-import { contractABI } from './nftABI';
-import { contractAddress } from './wagmiConfig';
+import { getAccount, readContract } from "@wagmi/core";
+import { contractABI } from "./nftABI";
+import { contractAddress } from "./wagmiConfig";
 
-const byteBeingsAddress = '0x1edfe058ec7dee67ecf81fdc364fcc3fe8cd51eb';
+// ⚠️ Si tienes más contratos, agrégalos aquí
+const contracts = [
+  contractAddress,
+  "0x1edfe058ec7dee67ecf81fdc364fcc3fe8cd51eb", // ejemplo byteBeings
+];
 
 export async function checkNFTOwnership() {
-  try {
-    const { address } = getAccount();
-    if (!address) throw new Error('Wallet not connected');
+  const { address } = getAccount();
+  if (!address) throw new Error("Wallet not connected");
 
-    const [mycoBalance, byteBalance] = await Promise.all([
-      readContract({
-        address: contractAddress,
-        abi: contractABI,
-        functionName: 'balanceOf',
-        args: [address],
-      }),
-      readContract({
-        address: byteBeingsAddress,
-        abi: contractABI,
-        functionName: 'balanceOf',
-        args: [address],
-      }),
-    ]);
+  let total = 0n;
 
-    return mycoBalance > 0n || byteBalance > 0n;
-  } catch (error) {
-    console.error('❌ Error checking NFT ownership:', error);
-    return false;
+  for (const addr of contracts) {
+    try {
+      const balance = await readContract({
+        address: addr,
+        abi: contractABI,
+        functionName: "balanceOf",
+        args: [address],
+      });
+      total += BigInt(balance);
+    } catch (e) {
+      // ignora contratos que fallen
+      console.warn("Error leyendo contrato:", addr, e);
+    }
   }
+
+  return {
+    hasAccess: total > 0n,
+    balance: Number(total),
+    owner: address,
+  };
 }

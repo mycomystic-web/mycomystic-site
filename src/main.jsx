@@ -9,7 +9,8 @@ import { config, chains } from './lib/wagmiConfig';
 import { RainbowKitProvider } from '@rainbow-me/rainbowkit';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
-import App from './pages/App'; // ✅ SOLO App
+import { BrowserRouter } from 'react-router-dom'; // ✅ IMPORTANTE
+import App from './App'; // ✅ corregido
 
 const queryClient = new QueryClient();
 
@@ -18,7 +19,9 @@ ReactDOM.createRoot(document.getElementById('root')).render(
     <QueryClientProvider client={queryClient}>
       <WagmiConfig config={config}>
         <RainbowKitProvider chains={chains}>
-          <App /> {/* ✅ Renderiza todo */}
+          <BrowserRouter> {/* ✅ ENVOLVER APP */}
+            <App />
+          </BrowserRouter>
         </RainbowKitProvider>
       </WagmiConfig>
     </QueryClientProvider>
