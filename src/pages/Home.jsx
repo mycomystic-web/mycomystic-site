@@ -94,22 +94,21 @@ function Home() {
 <div style={{ display: "flex", justifyContent: "center", marginTop: "20px" }}>
   <div
     style={{
-      width: "1100px",
-      height: "700px",
-      overflow: "hidden",
-      borderRadius: "16px",
-      boxShadow: "0 0 20px rgba(0,0,0,0.5)"
-    }}
+  width: "100%",
+  maxWidth: "420px",
+  aspectRatio: "9/16",
+  margin: "0 auto",
+  overflow: "hidden",
+  borderRadius: "16px"
+}}
   >
     <iframe
       src="/juego/index.html"
-      style={{
-        width: "100%",
-        height: "100%",
-        
-      
-       border: "none"
-      }}
+  style={{
+    width: "100%",
+    height: "100%",
+    border: "none"
+  }}
     />
   </div>
 </div>
