@@ -96,7 +96,7 @@ function Home() {
   
 
 <div style={{
-  width: isMobile ? "100%" : "420px",
+  width: isMobile ? "100%" : "960px",
   height: isMobile ? "100vh" : "740px",
   margin: "0 auto",
   overflow: "hidden",
@@ -106,9 +106,9 @@ function Home() {
     src="/juego/index.html"
     style={{
       width: isMobile ? "100%" : "960px",
-      height: isMobile ? "100vh" : "900px",
+      height: isMobile ? "100vh" : "740px",
       border: "none",
-      borderRadius: isMobile ? "0px" : "12px"
+      borderRadius: isMobile ? "0px" : "16px"
     }}
     scrolling="no"
   />
