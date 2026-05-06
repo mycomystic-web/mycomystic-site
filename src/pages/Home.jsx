@@ -96,19 +96,19 @@ function Home() {
   
 
 <div style={{
-  width: isMobile ? "100%" : "960px",
-  height: isMobile ? "100vh" : "540px",
+  width: isMobile ? "100%" : "1000px",
+  height: isMobile ? "100vh" : "600px",
   margin: "0 auto",
   overflow: "hidden",
-  borderRadius: isMobile ? "0px" : "16px"
+  borderRadius: isMobile ? "0px" : "10px"
 }}>
   <iframe
     src="/juego/index.html"
     style={{
-      width: isMobile ? "100%" : "960px",
-      height: isMobile ? "100vh" : "540px",
+      width: isMobile ? "100%" : "1000px",
+      height: isMobile ? "100vh" : "600px",
       border: "none",
-      borderRadius: isMobile ? "0px" : "16px"
+      borderRadius: isMobile ? "0px" : "10px"
     }}
     scrolling="no"
   />
