@@ -106,7 +106,7 @@ function Home() {
     src="/juego/index.html"
     style={{
       width: isMobile ? "100%" : "960px",
-      height: isMobile ? "100vh" : "600px",
+      height: isMobile ? "100vh" : "900px",
       border: "none",
       borderRadius: isMobile ? "0px" : "12px"
     }}
