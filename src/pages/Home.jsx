@@ -15,7 +15,7 @@ function Home() {
     setError("");
 
     if (!isConnected) {
-      setError("Connect your wallet first");
+      setError("⚠️ Connect your wallet first");
       return;
     }
 
@@ -28,11 +28,11 @@ function Home() {
       if (hasAccess) {
         navigate("/dashboard");
       } else {
-        setError("You don't own the required NFT");
+        setError("❌ You don't own the required NFT");
       }
     } catch (e) {
       console.error(e);
-      setError("Error checking NFT");
+      setError("❌ Error checking NFT");
     } finally {
       setLoading(false);
     }
@@ -42,16 +42,14 @@ function Home() {
     <div style={styles.container}>
       <div style={styles.hero}>
         
-        <h1 style={styles.title}>
-          Enter MycoMystic
-        </h1>
+        <h1 style={styles.title}>Enter MycoMystic</h1>
 
         <p style={styles.subtitle}>
           NFT holders unlock rewards, giveaways and exclusive access
           to a constantly growing ecosystem.
         </p>
 
-        {/* 🔥 BOTONES */}
+        {/* BOTONES */}
         <div style={styles.buttons}>
           <ConnectButton label="Connect Wallet" />
 
@@ -64,34 +62,58 @@ function Home() {
           </button>
         </div>
 
-        {/* 🔥 NFTs (YA CORREGIDO) */}
+        {/* GRID NFTs */}
         <div style={styles.grid}>
 
           <a href="https://opensea.io/es/collection/bytebeings/overview" target="_blank" style={styles.nft}>
             <img src="/nft1.png" style={styles.img} />
-            <p>seres de bytes</p>
+            <p>Seres de Bytes</p>
           </a>
 
           <a href="https://opensea.io/es/collection/the-pi/overview" target="_blank" style={styles.nft}>
             <img src="/nft2.png" style={styles.img} />
-            <p>el-pi</p>
+            <p>The Pi</p>
           </a>
 
           <a href="https://opensea.io/es/collection/mycomystic" target="_blank" style={styles.nft}>
             <img src="/nft3.png" style={styles.img} />
-            <p>micomistico</p>
+            <p>MycoMystic</p>
           </a>
 
           <a href="https://opensea.io/collection/proyecto4" target="_blank" style={styles.nft}>
             <img src="/nft4.png" style={styles.img} />
-            <p>proyecto 4</p>
+            <p>Coming Soon</p>
           </a>
 
         </div>
+{/* JUEGO BABY ORCA */}
+<h2 style={{ marginTop: "60px" }}>
+  🎮 Jugar a BabyOrca Playland
+</h2>
 
-        {/* ERROR */}
+<div style={{ display: "flex", justifyContent: "center", marginTop: "20px" }}>
+  <div
+    style={{
+      width: "1100px",
+      height: "700px",
+      overflow: "hidden",
+      borderRadius: "16px",
+      boxShadow: "0 0 20px rgba(0,0,0,0.5)"
+    }}
+  >
+    <iframe
+      src="/juego/index.html"
+      style={{
+        width: "100%",
+        height: "100%",
+        
+      
+       border: "none"
+      }}
+    />
+  </div>
+</div>
         {error && <p style={styles.error}>{error}</p>}
-
       </div>
     </div>
   );
@@ -110,13 +132,12 @@ const styles = {
   },
 
   hero: {
-    minHeight: "90vh",
+    minHeight: "100vh",
     display: "flex",
     flexDirection: "column",
-    justifyContent: "center",
     alignItems: "center",
     textAlign: "center",
-    padding: "20px",
+    padding: "40px 20px",
   },
 
   title: {
@@ -128,51 +149,56 @@ const styles = {
   },
 
   subtitle: {
-    maxWidth: "700px",
+    maxWidth: "600px",
     fontSize: "18px",
     opacity: 0.8,
-    marginBottom: "40px",
+    marginBottom: "30px",
   },
 
   buttons: {
     display: "flex",
-    gap: "20px",
-    marginBottom: "40px", // 🔥 separación con NFTs
+    gap: "15px",
+    marginBottom: "50px",
+    flexWrap: "wrap",
+    justifyContent: "center",
   },
 
   btnSecondary: {
     background: "linear-gradient(135deg, #6c5ce7, #a29bfe)",
-    padding: "15px 30px",
+    padding: "14px 28px",
     borderRadius: "12px",
     border: "none",
     color: "white",
     cursor: "pointer",
     fontSize: "16px",
+    transition: "0.3s",
   },
 
   grid: {
     display: "grid",
-    gridTemplateColumns: "repeat(auto-fit, minmax(220px, 220px))",
-    justifyContent: "center",
+    gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))",
     gap: "30px",
+    width: "100%",
+    maxWidth: "900px",
   },
 
   nft: {
-    background: "#111",
+    background: "rgba(255,255,255,0.03)",
+    backdropFilter: "blur(10px)",
     padding: "15px",
-    borderRadius: "15px",
+    borderRadius: "16px",
     textAlign: "center",
-    width: "220px",
     textDecoration: "none",
     color: "white",
-    transition: "0.3s",
+    transition: "all 0.3s ease",
+    border: "1px solid rgba(255,255,255,0.05)",
   },
 
   img: {
     width: "100%",
     height: "220px",
     objectFit: "cover",
-    borderRadius: "10px",
+    borderRadius: "12px",
     marginBottom: "10px",
   },
 
