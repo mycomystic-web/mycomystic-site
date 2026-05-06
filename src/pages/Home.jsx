@@ -88,7 +88,7 @@ function Home() {
         </div>
 {/* JUEGO BABY ORCA */}
 <h2 style={{ marginTop: "60px" }}>
-  🎮 Jugar a BabyOrca Playland
+  🎮 Play  BabyOrca Playland
 </h2>
 
 <div style={{ display: "flex", justifyContent: "center", marginTop: "20px" }}>
