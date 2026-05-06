@@ -5,6 +5,7 @@ import { useState } from "react";
 import { checkNFTOwnership } from "../lib/checkNFT";
 
 function Home() {
+  const isMobile = window.innerWidth < 768;
   const navigate = useNavigate();
   const { address, isConnected } = useAccount();
 
@@ -92,25 +93,27 @@ function Home() {
 </h2>
 
 <div style={{ display: "flex", justifyContent: "center", marginTop: "20px" }}>
-  <div
-    style={{
-  width: "100%",
-  maxWidth: "420px",
-  aspectRatio: "9/16",
+  
+
+<div style={{
+  width: isMobile ? "100%" : "420px",
+  height: isMobile ? "100vh" : "740px",
   margin: "0 auto",
   overflow: "hidden",
-  borderRadius: "16px"
-}}
-  >
-    <iframe
-      src="/juego/index.html"
-  style={{
-    width: "100%",
-    height: "100%",
-    border: "none"
-  }}
-    />
-  </div>
+  borderRadius: isMobile ? "0px" : "16px"
+}}>
+  <iframe
+    src="/juego/index.html"
+    style={{
+      width: "100%",
+      height: "100%",
+      border: "none",
+      display: "block"
+    }}
+    scrolling="no"
+  />
+</div>
+
 </div>
         {error && <p style={styles.error}>{error}</p>}
       </div>
