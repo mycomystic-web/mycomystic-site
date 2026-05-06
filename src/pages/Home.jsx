@@ -105,10 +105,10 @@ function Home() {
   <iframe
     src="/juego/index.html"
     style={{
-      width: "100%",
-      height: "100%",
+      width: isMobile ? "100%" : "960px",
+      height: isMobile ? "100vh" : "600px",
       border: "none",
-      display: "block"
+      borderRadius: isMobile ? "0px" : "12px"
     }}
     scrolling="no"
   />
