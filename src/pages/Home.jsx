@@ -110,7 +110,7 @@ function Home() {
       border: "none",
       borderRadius: isMobile ? "0px" : "10px"
     }}
-    scrolling="no"
+    scrolling="auto"
   />
 </div>
 
