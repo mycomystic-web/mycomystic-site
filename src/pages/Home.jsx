@@ -96,8 +96,8 @@ function Home() {
   
 
 <div style={{
-  width: isMobile ? "100%" : "960px",
-  height: isMobile ? "700px" : "600px",
+  width: isMobile ? "100%" : "400px",   // PC tamaño tipo celular
+  aspectRatio: "9 / 16",               // 🔥 CLAVE
   margin: "0 auto",
   overflow: "hidden",
   borderRadius: isMobile ? "0px" : "10px"
@@ -105,10 +105,10 @@ function Home() {
   <iframe
     src="/juego/index.html"
     style={{
-      width: isMobile ? "100%" : "960px",
-      height: isMobile ? "700px" : "600px",
-      border: "none",
-      borderRadius: isMobile ? "0px" : "10px"
+      width: "100%",
+      height: "100%",
+      border: "none"
+    
     }}
     scrolling="auto"
   />
