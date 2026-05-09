@@ -104,7 +104,7 @@ function Home() {
   <div
     style={{
       width: isMobile ? "100vw" : "420px",
-      height: isMobile ? "75vh" : "720px",
+      height: isMobile ? "100vh" : "720px",
       maxWidth: "420px",
       aspectRatio: "9 / 16",
       borderRadius: isMobile ? "0px" : "16px",
@@ -124,9 +124,9 @@ function Home() {
 
         border: "none",
 
-        overflow: "hidden",
+        overflow: "visible",
       }}
-      scrolling="no"
+      scrolling="yes"
   />
 </div>
 </div>
