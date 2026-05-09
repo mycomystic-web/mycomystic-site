@@ -112,6 +112,7 @@ function Home() {
       display: "flex",
       justifyContent: "center",
       alignItems: "center",
+      touchAction: "pan-y",
 
       
     }}
@@ -121,6 +122,8 @@ function Home() {
       style={{
         width: "420px",
         height: "720px",
+        
+        overflow: "hidden",
 
         border: "none",
 
