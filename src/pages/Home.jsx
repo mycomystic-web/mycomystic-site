@@ -103,8 +103,8 @@ function Home() {
 >
   <div
     style={{
-      width: isMobile ? "100vw" : "420px",
-      height: isMobile ? "100vh" : "680px",
+      width: isMobile ? "100vw" : "380px",
+      height: isMobile ? "100vh" : "640px",
       maxWidth: "420px",
       aspectRatio: "9 / 16",
       borderRadius: isMobile ? "0px" : "16px",
