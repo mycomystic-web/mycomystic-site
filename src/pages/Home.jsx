@@ -103,8 +103,8 @@ function Home() {
 >
   <div
     style={{
-      width: isMobile ? "100vw" : "420px",
-      height: isMobile ? "70vh" : "680px",
+      width: isMobile ? "100vw" : "480px",
+      height: isMobile ? "100vh" : "720px",
       maxWidth: "420px",
       aspectRatio: "9 / 16",
       borderRadius: isMobile ? "0px" : "16px",
@@ -120,8 +120,8 @@ function Home() {
     <iframe
       src="/juego/index.html"
       style={{
-        width: "420px",
-        height: "680px",
+        width: "380px",
+        height: "640px",
         
         overflow: "hidden",
 
