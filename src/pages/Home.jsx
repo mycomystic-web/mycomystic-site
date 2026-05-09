@@ -68,7 +68,7 @@ function Home() {
 
           <a href="https://opensea.io/es/collection/bytebeings/overview" target="_blank" style={styles.nft}>
             <img src="/nft1.png" style={styles.img} />
-            <p>Seres de Bytes</p>
+            <p>Beings de Bytes</p>
           </a>
 
           <a href="https://opensea.io/es/collection/the-pi/overview" target="_blank" style={styles.nft}>
@@ -105,9 +105,9 @@ function Home() {
     style={{
       width: isMobile ? "100vw" : "420px",
       height: isMobile ? "100vh" : "680px",
-
+      maxWidth: "420px",
       aspectRatio: "9 / 16",
-
+      
       margin: "0 auto",
 
       overflow: "hidden",
