@@ -124,9 +124,9 @@ function Home() {
 
         border: "none",
 
-        overflow: "visible",
+        touchAction: "pan-y",
       }}
-      scrolling="yes"
+      scrolling="no"
   />
 </div>
 </div>
