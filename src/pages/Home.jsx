@@ -81,9 +81,9 @@ function Home() {
             <p>MycoMystic</p>
           </a>
 
-          <a href="https://opensea.io/collection/proyecto4" target="_blank" style={styles.nft}>
+          <a href="https://opensea.io/es/collection/babyorca/overview" target="_blank" style={styles.nft}>
             <img src="/nft4.png" style={styles.img} />
-            <p>Coming Soon</p>
+            <p>Baby Orca</p>
           </a>
 
         </div>
