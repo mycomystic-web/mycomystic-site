@@ -44,21 +44,14 @@ function Dashboard() {
         setHasAccess(access);
 
         if (access && address && !alreadySent.current) {
-          alreadySent.current = true;
+        alreadySent.current = true;
 
-          await fetch("http://localhost:3002/save", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ wallet: address }),
-          });
-        }
+       console.log("Wallet válida:", address);
+       }
 
-        const res = await fetch("http://localhost:3002/count");
-        const data = await res.json();
-        setTotal(data.total);
-
+       // Temporalmente
+       setTotal(0); 
+       
       } catch (e) {
         console.error(e);
       } finally {
