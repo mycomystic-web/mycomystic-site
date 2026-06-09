@@ -2,7 +2,7 @@ import { readContract } from "@wagmi/core";
 import { contractABI } from "./nftABI";
 
 const contracts = [
-  "0x949eD0F447670165105B65083C059837050AFE0a", // MycoMystic
+  "0x0040F67debe231Eb2d8116eabb9Ff6ce214c7E94", // MycoMystic
   "0x1EdfE058Ec7DeE67EcF81FDC364FCC3FE8Cd51eb", // ByteBeings
 ];
 
