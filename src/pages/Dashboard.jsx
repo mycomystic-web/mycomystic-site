@@ -2,6 +2,7 @@ import { useEffect, useState, useRef } from "react";
 import { useAccount } from "wagmi";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { checkNFTOwnership } from "../lib/checkNFT";
+import { saveWallet } from "../lib/saveWallet";
 
 function Dashboard() {
   const { address, isConnected } = useAccount();
@@ -45,13 +46,13 @@ function Dashboard() {
 
         if (access && address && !alreadySent.current) {
         alreadySent.current = true;
-
+       await saveWallet(address, "MycoMystic");
        console.log("Wallet válida:", address);
        }
 
        // Temporalmente
        setTotal(0); 
-       
+
       } catch (e) {
         console.error(e);
       } finally {
