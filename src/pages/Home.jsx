@@ -27,7 +27,9 @@ function Home() {
       const hasAccess = result.hasAccess || result === true;
 
       if (hasAccess) {
+        console.log("NFT detectado:", address);
         navigate("/dashboard");
+        
       } else {
         setError("❌ You don't own the required NFT");
       }
