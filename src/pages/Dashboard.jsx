@@ -3,7 +3,7 @@ import { useAccount } from "wagmi";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { checkNFTOwnership } from "../lib/checkNFT";
 import { saveWallet } from "../lib/saveWallet";
-
+import { supabase } from "../lib/supabase";
 function Dashboard() {
   const { address, isConnected } = useAccount();
 
@@ -51,7 +51,7 @@ function Dashboard() {
        }
 
        // Temporalmente
-       setTotal(0); 
+        
 
       } catch (e) {
         console.error(e);
