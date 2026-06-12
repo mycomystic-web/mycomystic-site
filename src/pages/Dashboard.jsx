@@ -104,7 +104,7 @@ function Dashboard() {
 
         <div style={styles.counterBox}>
           <span>Total participants</span>
-          <h1 style={styles.counter}>{total}</h1>
+        
         </div>
       </div>
 
