@@ -64,7 +64,17 @@ function Home() {
             {loading ? "Checking..." : "Enter Portal"}
           </button>
         </div>
-
+        <p
+             style={{
+    color: "#a29bfe",
+    fontSize: "16px",
+    fontWeight: "bold",
+    marginTop: "15px",
+    textAlign: "center",
+  }}
+>
+   📱 iPhone & Mobile: Use WalletConnect
+</p>
         {/* GRID NFTs */}
         <div style={styles.grid}>
 
