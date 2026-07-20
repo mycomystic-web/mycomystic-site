@@ -45,7 +45,7 @@ function Home() {
     <div style={styles.container}>
       <div style={styles.hero}>
         
-        <h1 style={styles.title}>Enter MycoMystic</h1>
+        <h1 style={styles.title}>Baby Orca</h1>
 
         <p style={styles.subtitle}>
           NFT holders unlock rewards, giveaways and exclusive access
@@ -78,27 +78,201 @@ function Home() {
         {/* GRID NFTs */}
         <div style={styles.grid}>
 
-          <a href="https://opensea.io/es/collection/bytebeings/overview" target="_blank" style={styles.nft}>
-            <img src="/nft1.png" style={styles.img} />
-            <p>Beings de Bytes</p>
-          </a>
-
-          <a href="https://opensea.io/es/collection/the-pi/overview" target="_blank" style={styles.nft}>
-            <img src="/nft2.png" style={styles.img} />
-            <p>The Pi</p>
-          </a>
-
-          <a href="https://opensea.io/es/collection/mycomystic" target="_blank" style={styles.nft}>
-            <img src="/nft3.png" style={styles.img} />
-            <p>MycoMystic</p>
-          </a>
 
           <a href="https://opensea.io/es/collection/babyorca/overview" target="_blank" style={styles.nft}>
-            <img src="/nft4.png" style={styles.img} />
+            <img src="/babyorcaaaaa.png" style={styles.img} alt="Baby Orca" />
             <p>Baby Orca</p>
           </a>
 
         </div>
+        <div
+  style={{
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    gap: "60px",
+    marginTop: "80px",
+    marginBottom: "80px",
+    flexWrap: "wrap",
+  }}
+>
+  {/* Imagen */}
+  <img
+    src="/baby-panda.png"
+    alt="Meet the Baby Orcas"
+    style={{
+      width: "350px",
+      borderRadius: "20px",
+    }}
+  />
+
+  {/* Texto */}
+  <div style={{ maxWidth: "600px", textAlign: "left" }}>
+    <h2 style={{ fontSize: "42px", marginBottom: "20px" }}>
+      Meet the Baby Orcas
+    </h2>
+
+    <p style={{ fontSize: "20px", lineHeight: "1.8" }}>
+      Discover a collection of <strong>7,777 unique Baby Orcas</strong>
+      inspired by everyday life, fantasy, professions, adventures, and
+      creativity. Every Baby Orca has its own personality, making each one
+      truly unique.
+    </p>
+  </div>
+</div>
+
+<div
+  style={{
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    gap: "60px",
+    marginTop: "80px",
+    marginBottom: "80px",
+    flexWrap: "wrap",
+  }}
+>
+  {/* Texto */}
+  <div style={{ maxWidth: "600px", textAlign: "left" }}>
+    <h2 style={{ fontSize: "42px", marginBottom: "20px" }}>
+      Our Mission
+    </h2>
+
+    <p style={{ fontSize: "20px", lineHeight: "1.8" }}>
+      To bring joy, creativity, and imagination to collectors around the world
+      through unique Baby Orcas, building a community where every NFT tells its
+      own story.
+    </p>
+  </div>
+
+  {/* Imagen */}
+  <img
+    src="/our-mission.png"
+    alt="Our Mission"
+    style={{
+      width: "350px",
+      borderRadius: "20px",
+    }}
+  />
+</div>
+
+<div
+  style={{
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    gap: "60px",
+    marginTop: "80px",
+    marginBottom: "80px",
+    flexWrap: "wrap",
+  }}
+>
+  {/* Imagen */}
+  <img
+    src="/created-with-you.png"
+    alt="Created With You in Mind"
+    style={{
+      width: "350px",
+      borderRadius: "20px",
+    }}
+  />
+
+  {/* Texto */}
+  <div style={{ maxWidth: "600px", textAlign: "left" }}>
+    <h2 style={{ fontSize: "42px", marginBottom: "20px" }}>
+      Created With You in Mind
+    </h2>
+
+    <p style={{ fontSize: "20px", lineHeight: "1.8" }}>
+      Every Baby Orca was designed to bring joy, spark imagination, and become
+      a collectible you'll be proud to own. Find the one that speaks to you and
+      make it part of your journey.
+    </p>
+  </div>
+</div> 
+
+{/* BABY ORCA ROADMAP */}
+
+<div
+  style={{
+    marginTop: "100px",
+    marginBottom: "80px",
+    textAlign: "center",
+  }}
+>
+  <h2
+    style={{
+      fontSize: "48px",
+      marginBottom: "20px",
+    }}
+  >
+    🗺️ Baby Orca Roadmap
+  </h2>
+
+  <p
+    style={{
+      fontSize: "22px",
+      opacity: "0.85",
+      maxWidth: "800px",
+      margin: "0 auto",
+      lineHeight: "1.7",
+    }}
+  >
+    Our journey is just beginning. Here's what we're building together with the Baby Orca community.
+  </p>
+</div>
+
+<div
+  style={{
+    display: "grid",
+    gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))",
+    gap: "30px",
+    marginTop: "50px",
+    marginBottom: "160px",
+  }}
+>
+  {/* Phase 1 */}
+  <div style={styles.roadmapCard}>
+    <h3>🚀 Phase 1 — Launch</h3>
+    <ul>
+      <li>Launch the Baby Orca collection.</li>
+      <li>Build the community.</li>
+      <li>Reveal all 7,777 Baby Orcas.</li>
+    </ul>
+  </div>
+
+  {/* Phase 2 */}
+  <div style={styles.roadmapCard}>
+    <h3>🤝 Phase 2 — Community</h3>
+    <ul>
+      <li>Exclusive holder giveaways.</li>
+      <li>Community events.</li>
+      <li>Strategic collaborations.</li>
+    </ul>
+  </div>
+
+  {/* Phase 3 */}
+  <div style={styles.roadmapCard}>
+    <h3>📈 Phase 3 — Growth</h3>
+    <ul>
+      <li>Expand the Baby Orca ecosystem.</li>
+      <li>New partnerships.</li>
+      <li>More community rewards.</li>
+    </ul>
+  </div>
+
+  {/* Phase 4 */}
+  <div style={styles.roadmapCard}>
+    <h3>🌎 Phase 4 — Future</h3>
+    <ul>
+      <li>New experiences for holders.</li>
+      <li>Continued development.</li>
+      <li>Long-term community support.</li>
+    </ul>
+  </div>
+</div>
+
+
 {/* JUEGO BABY ORCA */}
 <h2 style={{ marginTop: "60px" }}>
   🎮 Play  BabyOrca Playland
@@ -209,11 +383,10 @@ const styles = {
   },
 
   grid: {
-    display: "grid",
-    gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))",
-    gap: "30px",
+    display: "flex",
+    justifyContent: "center",
     width: "100%",
-    maxWidth: "900px",
+    marginTop: "20px",
   },
 
   nft: {
@@ -226,12 +399,14 @@ const styles = {
     color: "white",
     transition: "all 0.3s ease",
     border: "1px solid rgba(255,255,255,0.05)",
+    width: "900px",
+    maxWidth: "100%",
   },
 
   img: {
     width: "100%",
-    height: "220px",
-    objectFit: "cover",
+    height: "500px",
+    objectFit: "contain",
     borderRadius: "12px",
     marginBottom: "10px",
   },
