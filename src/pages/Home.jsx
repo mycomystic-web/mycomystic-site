@@ -230,49 +230,74 @@ function Home() {
     marginTop: "50px",
     marginBottom: "160px",
   }}
+
 >
-  {/* Phase 1 */}
-  <div style={styles.roadmapCard}>
-    <h3>🚀 Phase 1 — Launch</h3>
-    <ul>
-      <li>Launch the Baby Orca collection.</li>
-      <li>Build the community.</li>
-      <li>Reveal all 7,777 Baby Orcas.</li>
-    </ul>
-  </div>
-
-  {/* Phase 2 */}
-  <div style={styles.roadmapCard}>
-    <h3>🤝 Phase 2 — Community</h3>
-    <ul>
-      <li>Exclusive holder giveaways.</li>
-      <li>Community events.</li>
-      <li>Strategic collaborations.</li>
-    </ul>
-  </div>
-
-  {/* Phase 3 */}
-  <div style={styles.roadmapCard}>
-    <h3>📈 Phase 3 — Growth</h3>
-    <ul>
-      <li>Expand the Baby Orca ecosystem.</li>
-      <li>New partnerships.</li>
-      <li>More community rewards.</li>
-    </ul>
-  </div>
-
-  {/* Phase 4 */}
-  <div style={styles.roadmapCard}>
-    <h3>🌎 Phase 4 — Future</h3>
-    <ul>
-      <li>New experiences for holders.</li>
-      <li>Continued development.</li>
-      <li>Long-term community support.</li>
-    </ul>
-  </div>
+  {/* Roadmap Intro */}
+<div
+  style={{
+    gridColumn: "1 / -1",
+    textAlign: "center",
+    maxWidth: "900px",
+    margin: "0 auto 50px auto",
+    fontSize: "20px",
+    lineHeight: "1.8",
+    opacity: "0.9",
+  }}
+>
+  Together, we are building more than just an NFT collection: we are creating a
+  community-driven ecosystem where holders grow, participate, and unlock new
+  experiences over time.
 </div>
 
+   {/* Phase 1 */}
+<div style={styles.roadmapCard}>
+  <h3> Phase 1 — Foundations</h3>
+  <p><strong>Building the groundwork for the Baby Orca universe.</strong></p>
+  <ul>
+    <li>Launch of the Baby Orca collection.</li>
+    <li>Reveal of the 7,777 unique Baby Orcas.</li>
+    <li>Launch of the official website.</li>
+    <li>Collection listing on OpenSea.</li>
+  </ul>
+</div>
 
+   {/* Phase 2 */}
+<div style={styles.roadmapCard}>
+  <h3> Phase 2 — Community</h3>
+  <p><strong>Creating a vibrant and engaged community.</strong></p>
+  <ul>
+    <li>Exclusive giveaways for holders.</li>
+    <li>Community events and activities.</li>
+    <li>Strategic collaborations.</li>
+  </ul>
+</div>
+
+   {/* Phase 3 */}
+<div style={styles.roadmapCard}>
+  <h3> Phase 3 — Utility and Ecosystem</h3>
+  <p><strong>Expanding the value of holding a Baby Orca.</strong></p>
+  <ul>
+    <li>Integration for MycoMystic holders.</li>
+    <li>Exclusive rewards for holders.</li>
+    <li>New partnerships.</li>
+    <li>Ecosystem expansion.</li>
+    <li>New community experiences.</li>
+  </ul>
+</div>
+
+{/* Phase 4 */}
+<div style={styles.roadmapCard}>
+  <h3> Phase 4 — Future</h3>
+  <p><strong>Building long-term value for our community.</strong></p>
+  <ul>
+    <li>New utilities.</li>
+    <li>Future collections.</li>
+    <li>Ongoing ecosystem development.</li>
+    <li>Long-term support for holders.</li>
+    <li>New opportunities for the community.</li>
+  </ul>
+</div>
+</div>
 {/* JUEGO BABY ORCA */}
 <h2 style={{ marginTop: "60px" }}>
   🎮 Play  BabyOrca Playland
