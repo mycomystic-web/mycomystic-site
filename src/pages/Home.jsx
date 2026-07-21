@@ -196,107 +196,43 @@ function Home() {
 <div
   style={{
     marginTop: "100px",
-    marginBottom: "80px",
-    textAlign: "center",
+    marginBottom: "160px",
+    maxWidth: "900px",
+    marginLeft: "auto",
+    marginRight: "auto",
+    textAlign: "left",
   }}
 >
   <h2
     style={{
       fontSize: "48px",
-      marginBottom: "20px",
+      marginBottom: "30px",
+      textAlign: "center",
     }}
   >
-    🗺️ Baby Orca Roadmap
+    About Baby Orca
   </h2>
 
-  <p
-    style={{
-      fontSize: "22px",
-      opacity: "0.85",
-      maxWidth: "800px",
-      margin: "0 auto",
-      lineHeight: "1.7",
-    }}
-  >
-    Our journey is just beginning. Here's what we're building together with the Baby Orca community.
+  <p style={{ fontSize: "20px", lineHeight: "1.9", marginBottom: "25px" }}>
+    Baby Orca is more than an NFT collection—it's a community-driven ecosystem built on transparency, creativity, and long-term growth.
   </p>
-</div>
 
-<div
-  style={{
-    display: "grid",
-    gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))",
-    gap: "30px",
-    marginTop: "50px",
-    marginBottom: "160px",
-  }}
+  <p style={{ fontSize: "20px", lineHeight: "1.9", marginBottom: "25px" }}>
+    Our mission is to create meaningful value for every holder through exclusive experiences, continuous utilities, community participation, and rewarding opportunities that grow alongside the project.
+  </p>
 
->
-  {/* Roadmap Intro */}
-<div
-  style={{
-    gridColumn: "1 / -1",
-    textAlign: "center",
-    maxWidth: "900px",
-    margin: "0 auto 50px auto",
-    fontSize: "20px",
-    lineHeight: "1.8",
-    opacity: "0.9",
-  }}
->
-  Together, we are building more than just an NFT collection: we are creating a
-  community-driven ecosystem where holders grow, participate, and unlock new
-  experiences over time.
-</div>
+  <p style={{ fontSize: "20px", lineHeight: "1.9", marginBottom: "25px" }}>
+    We believe an NFT should represent more than ownership. It should provide access to an evolving ecosystem where holders can participate, connect, and benefit from future developments.
+  </p>
 
-   {/* Phase 1 */}
-<div style={styles.roadmapCard}>
-  <h3> Phase 1 — Foundations</h3>
-  <p><strong>Building the groundwork for the Baby Orca universe.</strong></p>
-  <ul>
-    <li>Launch of the Baby Orca collection.</li>
-    <li>Reveal of the 7,777 unique Baby Orcas.</li>
-    <li>Launch of the official website.</li>
-    <li>Collection listing on OpenSea.</li>
-  </ul>
-</div>
+  <p style={{ fontSize: "20px", lineHeight: "1.9", marginBottom: "25px" }}>
+    Every phase of our roadmap is designed to strengthen the community, expand the Baby Orca ecosystem, and deliver long-term value through new utilities, strategic partnerships, exclusive rewards, and ongoing innovation.
+  </p>
 
-   {/* Phase 2 */}
-<div style={styles.roadmapCard}>
-  <h3> Phase 2 — Community</h3>
-  <p><strong>Creating a vibrant and engaged community.</strong></p>
-  <ul>
-    <li>Exclusive giveaways for holders.</li>
-    <li>Community events and activities.</li>
-    <li>Strategic collaborations.</li>
-  </ul>
-</div>
+  <p style={{ fontSize: "20px", lineHeight: "1.9" }}>
+    Together, we're building a project where the community doesn't just support the future—it helps create it.
+  </p>
 
-   {/* Phase 3 */}
-<div style={styles.roadmapCard}>
-  <h3> Phase 3 — Utility and Ecosystem</h3>
-  <p><strong>Expanding the value of holding a Baby Orca.</strong></p>
-  <ul>
-    <li>Integration for MycoMystic holders.</li>
-    <li>Exclusive rewards for holders.</li>
-    <li>New partnerships.</li>
-    <li>Ecosystem expansion.</li>
-    <li>New community experiences.</li>
-  </ul>
-</div>
-
-{/* Phase 4 */}
-<div style={styles.roadmapCard}>
-  <h3> Phase 4 — Future</h3>
-  <p><strong>Building long-term value for our community.</strong></p>
-  <ul>
-    <li>New utilities.</li>
-    <li>Future collections.</li>
-    <li>Ongoing ecosystem development.</li>
-    <li>Long-term support for holders.</li>
-    <li>New opportunities for the community.</li>
-  </ul>
-</div>
 </div>
 {/* JUEGO BABY ORCA */}
 <h2 style={{ marginTop: "60px" }}>
