@@ -210,7 +210,7 @@ function Home() {
       textAlign: "center",
     }}
   >
-    About Baby Orca
+    Building More Than an NFT Collection
   </h2>
 
   <p style={{ fontSize: "20px", lineHeight: "1.9", marginBottom: "25px" }}>
