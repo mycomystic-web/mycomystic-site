@@ -135,14 +135,24 @@ function Home() {
   {/* Texto */}
   <div style={{ maxWidth: "600px", textAlign: "left" }}>
     <h2 style={{ fontSize: "42px", marginBottom: "20px" }}>
-      Our Mission
-    </h2>
+  Our Mission
+</h2>
 
-    <p style={{ fontSize: "20px", lineHeight: "1.8" }}>
-      To bring joy, creativity, and imagination to collectors around the world
-      through unique Baby Orcas, building a community where every NFT tells its
-      own story.
-    </p>
+<h3 style={{ fontSize: "28px", marginBottom: "20px" }}>
+  Why Baby Orca Exists
+</h3>
+
+<p style={{ fontSize: "20px", lineHeight: "1.8", marginBottom: "25px" }}>
+  Baby Orca was created to build more than an NFT collection. Our mission is to create a transparent, community-driven ecosystem where every holder becomes part of a project that continues to evolve over time.
+</p>
+
+<p style={{ fontSize: "20px", lineHeight: "1.8", marginBottom: "25px" }}>
+  We believe NFTs should represent more than digital ownership. They should create opportunities to participate, connect with others, access exclusive experiences, and benefit from a growing ecosystem built with the community at its core.
+</p>
+
+<p style={{ fontSize: "20px", lineHeight: "1.8" }}>
+  Our goal is to reward loyalty, encourage participation, and continuously develop meaningful utilities that bring lasting value to every holder.
+</p>
   </div>
 
   {/* Imagen */}
@@ -180,16 +190,75 @@ function Home() {
   {/* Texto */}
   <div style={{ maxWidth: "600px", textAlign: "left" }}>
     <h2 style={{ fontSize: "42px", marginBottom: "20px" }}>
-      Created With You in Mind
-    </h2>
+  OUR VISION
+</h2>
 
-    <p style={{ fontSize: "20px", lineHeight: "1.8" }}>
-      Every Baby Orca was designed to bring joy, spark imagination, and become
-      a collectible you'll be proud to own. Find the one that speaks to you and
-      make it part of your journey.
-    </p>
+<h3 style={{ fontSize: "26px", marginBottom: "20px" }}>
+  Where Baby Orca Is Going
+</h3>
+
+<p style={{ fontSize: "20px", lineHeight: "1.8", marginBottom: "20px" }}>
+  Our vision is to establish Baby Orca as a trusted Web3 community where collectors, creators, and supporters grow together through innovation, collaboration, and shared experiences.
+</p>
+
+<p style={{ fontSize: "20px", lineHeight: "1.8", marginBottom: "20px" }}>
+  We aim to build an ecosystem that continues expanding beyond its initial launch, introducing new utilities, partnerships, community initiatives, and opportunities that strengthen both the project and its holders.
+</p>
+
+<p style={{ fontSize: "20px", lineHeight: "1.8" }}>
+  We believe that long-term success is measured not only by the size of a collection, but by the strength of its community and the value it consistently delivers.
+</p>
+    
   </div>
 </div> 
+<div
+  style={{
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    gap: "60px",
+    marginTop: "80px",
+    marginBottom: "80px",
+    flexWrap: "wrap",
+  }}
+>
+  {/* Texto */}
+  <div style={{ maxWidth: "600px", textAlign: "left" }}>
+    <h2 style={{ fontSize: "42px", marginBottom: "20px" }}>
+      UTILITY
+    </h2>
+
+    <h3 style={{ fontSize: "26px", marginBottom: "20px" }}>
+      What It Means to Be a Holder
+    </h3>
+
+    <p style={{ fontSize: "20px", lineHeight: "1.8", marginBottom: "20px" }}>
+      Utility is not a single feature—it is everything that makes owning a Baby Orca more valuable over time.
+    </p>
+
+    <p style={{ fontSize: "20px", lineHeight: "1.8", marginBottom: "20px" }}>
+      Holding a Baby Orca provides access to a growing ecosystem that will continue expanding through exclusive experiences, community events, future platform features, strategic partnerships, holder rewards, and new opportunities as the project evolves.
+    </p>
+
+    <p style={{ fontSize: "20px", lineHeight: "1.8", marginBottom: "20px" }}>
+      Rather than offering temporary incentives, our objective is to continuously develop utilities that strengthen the ecosystem and provide meaningful reasons to remain part of the community.
+    </p>
+
+    <p style={{ fontSize: "20px", lineHeight: "1.8" }}>
+      As Baby Orca grows, so will the benefits of being a holder.
+    </p>
+  </div>
+
+  {/* Imagen */}
+  <img
+    src="/utility.png"
+    alt="Utility"
+    style={{
+      width: "350px",
+      borderRadius: "20px",
+    }}
+  />
+</div>
 
 {/* BABY ORCA ROADMAP */}
 
@@ -234,6 +303,8 @@ function Home() {
   </p>
 
 </div>
+
+
 {/* JUEGO BABY ORCA */}
 <h2 style={{ marginTop: "60px" }}>
   🎮 Play  BabyOrca Playland
