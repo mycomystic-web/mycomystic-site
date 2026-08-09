@@ -48,8 +48,8 @@ function Home() {
         <h1 style={styles.title}>Baby Orca</h1>
 
         <p style={styles.subtitle}>
-          NFT holders unlock rewards, giveaways and exclusive access
-          to a constantly growing ecosystem.
+          Discover, collect, and own unique Baby Orcas while unlocking
+          exclusive benefits created for holders.
         </p>
 
         {/* BOTONES */}
@@ -113,7 +113,7 @@ function Home() {
     </h2>
 
     <p style={{ fontSize: "20px", lineHeight: "1.8" }}>
-      Discover a collection of <strong>7,777 unique Baby Orcas</strong>
+      Discover a collection of <strong>7,777 unique Baby Orcas</strong>{" "}
       inspired by everyday life, fantasy, professions, adventures, and
       creativity. Every Baby Orca has its own personality, making each one
       truly unique.
@@ -143,15 +143,14 @@ function Home() {
 </h3>
 
 <p style={{ fontSize: "20px", lineHeight: "1.8", marginBottom: "25px" }}>
-  Baby Orca was created to build more than an NFT collection. Our mission is to create a transparent, community-driven ecosystem where every holder becomes part of a project that continues to evolve over time.
-</p>
-
-<p style={{ fontSize: "20px", lineHeight: "1.8", marginBottom: "25px" }}>
-  We believe NFTs should represent more than digital ownership. They should create opportunities to participate, connect with others, access exclusive experiences, and benefit from a growing ecosystem built with the community at its core.
+  Baby Orca was created to bring together creativity, personality,
+  and collectibility through 7,777 unique digital characters.
 </p>
 
 <p style={{ fontSize: "20px", lineHeight: "1.8" }}>
-  Our goal is to reward loyalty, encourage participation, and continuously develop meaningful utilities that bring lasting value to every holder.
+  Our mission is to create a collection where every Baby Orca feels
+  different, giving collectors the opportunity to discover and own
+  the characters that connect with them most.
 </p>
   </div>
 
@@ -198,15 +197,19 @@ function Home() {
 </h3>
 
 <p style={{ fontSize: "20px", lineHeight: "1.8", marginBottom: "20px" }}>
-  Our vision is to establish Baby Orca as a trusted Web3 community where collectors, creators, and supporters grow together through innovation, collaboration, and shared experiences.
+  Our vision is to make Baby Orca a collection that people enjoy
+  discovering, collecting, and holding.
 </p>
 
 <p style={{ fontSize: "20px", lineHeight: "1.8", marginBottom: "20px" }}>
-  We aim to build an ecosystem that continues expanding beyond its initial launch, introducing new utilities, partnerships, community initiatives, and opportunities that strengthen both the project and its holders.
+  With 7,777 unique Baby Orcas, we want each character to stand out
+  through its own combination of traits, style, and personality, making
+  the discovery of every Baby Orca part of the collecting experience.
 </p>
 
 <p style={{ fontSize: "20px", lineHeight: "1.8" }}>
-  We believe that long-term success is measured not only by the size of a collection, but by the strength of its community and the value it consistently delivers.
+  As the collection grows, we will continue developing Baby Orca while
+  keeping the characters and collectors at the heart of everything we do.
 </p>
     
   </div>
@@ -233,20 +236,23 @@ function Home() {
     </h3>
 
     <p style={{ fontSize: "20px", lineHeight: "1.8", marginBottom: "20px" }}>
-      Utility is not a single feature—it is everything that makes owning a Baby Orca more valuable over time.
-    </p>
+  Owning a Baby Orca makes you a holder and gives you access to exclusive
+  benefits connected to the collection.
+</p>
 
-    <p style={{ fontSize: "20px", lineHeight: "1.8", marginBottom: "20px" }}>
-      Holding a Baby Orca provides access to a growing ecosystem that will continue expanding through exclusive experiences, community events, future platform features, strategic partnerships, holder rewards, and new opportunities as the project evolves.
-    </p>
+<p style={{ fontSize: "20px", lineHeight: "1.8", marginBottom: "20px" }}>
+  Holders will have access to exclusive giveaways, private community spaces,
+  and opportunities to participate in Baby Orca decisions and activities.
+</p>
 
-    <p style={{ fontSize: "20px", lineHeight: "1.8", marginBottom: "20px" }}>
-      Rather than offering temporary incentives, our objective is to continuously develop utilities that strengthen the ecosystem and provide meaningful reasons to remain part of the community.
-    </p>
+<p style={{ fontSize: "20px", lineHeight: "1.8", marginBottom: "20px" }}>
+  Our goal is to keep utility simple, real, and sustainable, focusing on
+  benefits that we can realistically provide to Baby Orca holders.
+</p>
 
-    <p style={{ fontSize: "20px", lineHeight: "1.8" }}>
-      As Baby Orca grows, so will the benefits of being a holder.
-    </p>
+<p style={{ fontSize: "20px", lineHeight: "1.8" }}>
+  As the collection grows, we can introduce new holder benefits over time.
+</p>
   </div>
 
   {/* Imagen */}
@@ -279,28 +285,34 @@ function Home() {
       textAlign: "center",
     }}
   >
-    Building More Than an NFT Collection
+    Building the Future of Baby Orca
   </h2>
 
   <p style={{ fontSize: "20px", lineHeight: "1.9", marginBottom: "25px" }}>
-    Baby Orca is more than an NFT collection—it's a community-driven ecosystem built on transparency, creativity, and long-term growth.
-  </p>
+  Baby Orca begins with a collection of 7,777 unique characters, each
+  created with its own combination of traits, style, and personality.
+</p>
 
-  <p style={{ fontSize: "20px", lineHeight: "1.9", marginBottom: "25px" }}>
-    Our mission is to create meaningful value for every holder through exclusive experiences, continuous utilities, community participation, and rewarding opportunities that grow alongside the project.
-  </p>
+<p style={{ fontSize: "20px", lineHeight: "1.9", marginBottom: "25px" }}>
+  Our goal is to continue developing the collection while giving holders
+  real reasons to participate and stay connected with Baby Orca.
+</p>
 
-  <p style={{ fontSize: "20px", lineHeight: "1.9", marginBottom: "25px" }}>
-    We believe an NFT should represent more than ownership. It should provide access to an evolving ecosystem where holders can participate, connect, and benefit from future developments.
-  </p>
+<p style={{ fontSize: "20px", lineHeight: "1.9", marginBottom: "25px" }}>
+  Our roadmap will focus on achievable goals: developing the collection,
+  offering exclusive holder benefits, hosting giveaways, and creating
+  spaces for the community.
+</p>
 
-  <p style={{ fontSize: "20px", lineHeight: "1.9", marginBottom: "25px" }}>
-    Every phase of our roadmap is designed to strengthen the community, expand the Baby Orca ecosystem, and deliver long-term value through new utilities, strategic partnerships, exclusive rewards, and ongoing innovation.
-  </p>
+<p style={{ fontSize: "20px", lineHeight: "1.9", marginBottom: "25px" }}>
+  Holders will also have opportunities to participate in selected Baby Orca
+  decisions and activities as the collection develops.
+</p>
 
-  <p style={{ fontSize: "20px", lineHeight: "1.9" }}>
-    Together, we're building a project where the community doesn't just support the future—it helps create it.
-  </p>
+<p style={{ fontSize: "20px", lineHeight: "1.9" }}>
+  As Baby Orca grows, we can introduce new ideas and benefits while
+  prioritizing what we can realistically build and deliver.
+</p>
 
 </div>
 
