@@ -63,6 +63,12 @@ function Home() {
           >
             {loading ? "Checking..." : "Enter Portal"}
           </button>
+          <button
+           style={styles.btnSecondary}
+           onClick={() => navigate("/whitelist")}
+          >
+           Join Whitelist
+         </button>
         </div>
         <p
              style={{
