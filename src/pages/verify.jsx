@@ -1,35 +1,95 @@
+import { useEffect, useState } from "react";
+
 export default function VerifyPage() {
+  const [status, setStatus] = useState("Connecting with Discord...");
+
+  useEffect(() => {
+    const verifyDiscord = async () => {
+      try {
+        const params = new URLSearchParams(window.location.search);
+        const code = params.get("code");
+
+        if (!code) {
+          setStatus("Discord authorization code was not received.");
+          return;
+        }
+
+        const response = await fetch(
+          "https://uyftcwzoevdqjtxkmvpm.supabase.co/functions/v1/discord-verify",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              code,
+              redirect_uri: `${window.location.origin}/verify`,
+            }),
+          }
+        );
+
+        const data = await response.json();
+
+        if (!response.ok) {
+          console.error("Discord verification error:", data);
+          setStatus("Discord verification failed.");
+          return;
+        }
+
+        console.log("Discord verification:", data);
+
+        // Guardar que Discord fue verificado
+        localStorage.setItem("discord_verified", "true");
+
+        // Guardar información básica del usuario de Discord
+        if (data.user) {
+          localStorage.setItem(
+            "discord_user",
+            JSON.stringify(data.user)
+          );
+        }
+
+        setStatus("✅ Discord verified successfully! Redirecting...");
+
+        // Regresar automáticamente al Dashboard
+        setTimeout(() => {
+          window.location.href = "/whitelist";
+        }, 1500);
+
+      } catch (error) {
+        console.error("Verification error:", error);
+        setStatus("Discord verification failed.");
+      }
+    };
+
+    verifyDiscord();
+  }, []);
+
   return (
-    <div className="flex flex-col items-center space-y-6 p-10 min-h-screen justify-center bg-[#000] text-white">
-      <h1 className="text-2xl font-bold">Submit your Wallet</h1>
+    <div
+      style={{
+        minHeight: "100vh",
+        background: "#000",
+        color: "#fff",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        textAlign: "center",
+        padding: "30px",
+      }}
+    >
+      <div>
+        <h1>Baby Orca Verification</h1>
 
-      <form
-        action="https://formsubmit.co/sorteonftmycomystic@gmail.com"
-        method="POST"
-        className="flex flex-col items-center space-y-4"
-      >
-        <input
-          type="text"
-          name="wallet"
-          placeholder="0x..."
-          required
-          className="px-4 py-2 border border-gray-300 rounded w-80 text-black"
-        />
-
-        {/* Forzar envíos individuales */}
-        <input type="hidden" name="_template" value="table" />
-        <input type="hidden" name="_cc" value="sorteonftmycomystic@gmail.com" />
-        <input type="hidden" name="_autoresponse" value="✅ Wallet recibida. Gracias por participar en MycoMystic." />
-        <input type="hidden" name="_captcha" value="false" />
-        <input type="hidden" name="_subject" value="New MycoMystic Wallet Submission" />
-
-        <button
-          type="submit"
-          className="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded-full font-semibold"
+        <p
+          style={{
+            marginTop: "20px",
+            fontSize: "18px",
+          }}
         >
-          ✅ Send Wallet
-        </button>
-      </form>
+          {status}
+        </p>
+      </div>
     </div>
   );
 }

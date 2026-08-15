@@ -1,6 +1,8 @@
 import { Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import Dashboard from "./pages/Dashboard";
+import Whitelist from "./pages/Whitelist";
+import VerifyPage from "./pages/verify";
 import Navbar from "./components/Navbar";
 
 function App() {
@@ -11,6 +13,8 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/whitelist" element={<Whitelist />} />
+        <Route path="/verify" element={<VerifyPage />} />
       </Routes>
     </div>
   );
