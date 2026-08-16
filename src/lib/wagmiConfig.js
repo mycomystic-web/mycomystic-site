@@ -1,54 +1,18 @@
 import { configureChains, createConfig } from 'wagmi';
 import { mainnet } from 'viem/chains';
 import { publicProvider } from 'wagmi/providers/public';
-import { connectorsForWallets } from '@rainbow-me/rainbowkit';
-
-import {
-  metaMaskWallet,
-  rainbowWallet,
-  coinbaseWallet,
-  trustWallet,
-  walletConnectWallet,
-} from '@rainbow-me/rainbowkit/wallets';
+import { getDefaultWallets } from '@rainbow-me/rainbowkit';
 
 const { chains, publicClient } = configureChains(
   [mainnet],
   [publicProvider()]
 );
 
-const projectId = 'bb636a650db0d7617517559404e792b8';
-
-const connectors = connectorsForWallets([
-  {
-    groupName: 'Recommended',
-    wallets: [
-      metaMaskWallet({
-        chains,
-      }),
-
-      rainbowWallet({
-        chains,
-        projectId,
-      }),
-
-      coinbaseWallet({
-        chains,
-        appName: 'MycoMystic',
-        projectId,
-      }),
-
-      trustWallet({
-        chains,
-        projectId,
-      }),
-
-      walletConnectWallet({
-        chains,
-        projectId,
-      }),
-    ],
-  },
-]);
+const { connectors } = getDefaultWallets({
+  appName: 'Baby Orca',
+  projectId: 'bb636a650db0d7617517559404e792b8',
+  chains,
+});
 
 export const config = createConfig({
   autoConnect: true,
