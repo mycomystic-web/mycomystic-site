@@ -4,6 +4,7 @@ import { publicProvider } from 'wagmi/providers/public';
 import { connectorsForWallets } from '@rainbow-me/rainbowkit';
 
 import {
+  metaMaskWallet,
   rainbowWallet,
   coinbaseWallet,
   trustWallet,
@@ -21,6 +22,10 @@ const connectors = connectorsForWallets([
   {
     groupName: 'Recommended',
     wallets: [
+      metaMaskWallet({
+        chains,
+      }),
+
       rainbowWallet({
         chains,
         projectId,
