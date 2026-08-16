@@ -8,11 +8,17 @@ const { chains, publicClient } = configureChains(
   [publicProvider()]
 );
 
-const { connectors } = getDefaultWallets({
+const { connectors: defaultConnectors } = getDefaultWallets({
   appName: 'MycoMystic',
   projectId: 'bb636a650db0d7617517559404e792b8', // ✅ Project ID WalletConnect
   chains,
 });
+
+// Remove direct MetaMask connection.
+// MetaMask remains available through WalletConnect, which works correctly on iPhone.
+const connectors = defaultConnectors.filter(
+  (connector) => connector.id !== 'metaMask'
+);
 
 export const config = createConfig({
   autoConnect: true,
