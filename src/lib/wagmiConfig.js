@@ -1,24 +1,49 @@
 import { configureChains, createConfig } from 'wagmi';
-import { base } from 'viem/chains';
+import { mainnet } from 'viem/chains';
 import { publicProvider } from 'wagmi/providers/public';
-import { getDefaultWallets } from '@rainbow-me/rainbowkit';
+import { connectorsForWallets } from '@rainbow-me/rainbowkit';
+
+import {
+  rainbowWallet,
+  coinbaseWallet,
+  trustWallet,
+  walletConnectWallet,
+} from '@rainbow-me/rainbowkit/wallets';
 
 const { chains, publicClient } = configureChains(
-  [base],
+  [mainnet],
   [publicProvider()]
 );
 
-const { connectors: defaultConnectors } = getDefaultWallets({
-  appName: 'MycoMystic',
-  projectId: 'bb636a650db0d7617517559404e792b8', // ✅ Project ID WalletConnect
-  chains,
-});
+const projectId = 'bb636a650db0d7617517559404e792b8';
 
-// Remove direct MetaMask connection.
-// MetaMask remains available through WalletConnect, which works correctly on iPhone.
-const connectors = defaultConnectors.filter(
-  (connector) => connector.id !== 'metaMask'
-);
+const connectors = connectorsForWallets([
+  {
+    groupName: 'Recommended',
+    wallets: [
+      rainbowWallet({
+        chains,
+        projectId,
+      }),
+
+      coinbaseWallet({
+        chains,
+        appName: 'MycoMystic',
+        projectId,
+      }),
+
+      trustWallet({
+        chains,
+        projectId,
+      }),
+
+      walletConnectWallet({
+        chains,
+        projectId,
+      }),
+    ],
+  },
+]);
 
 export const config = createConfig({
   autoConnect: true,
@@ -27,4 +52,6 @@ export const config = createConfig({
 });
 
 export { chains };
-export const contractAddress = '0x0040F67debe231Eb2d8116eabb9Ff6ce214c7E94';
+
+export const contractAddress =
+  '0x0040F67debe231Eb2d8116eabb9Ff6ce214c7E94';
