@@ -6,7 +6,7 @@ function Navbar() {
     <div style={styles.nav}>
       
       {/* LOGO */}
-      <h1 style={styles.logo}>MycoMystic</h1>
+      <h1 style={styles.logo}>Baby Orca</h1>
 
       {/* LINKS */}
       <div style={styles.links}>
