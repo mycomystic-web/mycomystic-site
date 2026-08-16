@@ -6,12 +6,34 @@ import { saveWallet } from "../lib/saveWallet";
 import { supabase } from "../lib/supabase";
 
 // =====================================
-// CONFIGURACIÓN DEL GIVEAWAY BABY ORCA
+// CONFIGURACIÓN DE LOS 4 SORTEOS
 // =====================================
-const giveawayWinner = {
-  nft: "#1253",
-  drawAt: "2026-08-16T17:00:00-04:00",
-};
+// Solo modifica esta sección para futuros sorteos.
+// active: true  = muestra el ganador y contador.
+// active: false = deja el cuadro sin contador.
+// drawAt = fecha y hora exacta del sorteo.
+const giveaways = [
+  {
+    active: true,
+    nft: "#1253",
+    drawAt: "2026-08-16T17:00:00-04:00",
+  },
+  {
+    active: false,
+    nft: "",
+    drawAt: "",
+  },
+  {
+    active: false,
+    nft: "",
+    drawAt: "",
+  },
+  {
+    active: false,
+    nft: "",
+    drawAt: "",
+  },
+];
 
 const CLAIM_PERIOD = 24 * 60 * 60 * 1000;
 
@@ -28,15 +50,19 @@ function formatRemaining(milliseconds) {
     .join(":");
 }
 
-function GiveawayInfo() {
+function GiveawayInfo({ giveaway }) {
   const [remaining, setRemaining] = useState(() => {
-    const end = new Date(giveawayWinner.drawAt).getTime() + CLAIM_PERIOD;
+    if (!giveaway.active || !giveaway.drawAt) return 0;
+
+    const end = new Date(giveaway.drawAt).getTime() + CLAIM_PERIOD;
     return Math.max(0, end - Date.now());
   });
 
   useEffect(() => {
+    if (!giveaway.active || !giveaway.drawAt) return;
+
     const updateCountdown = () => {
-      const end = new Date(giveawayWinner.drawAt).getTime() + CLAIM_PERIOD;
+      const end = new Date(giveaway.drawAt).getTime() + CLAIM_PERIOD;
       setRemaining(Math.max(0, end - Date.now()));
     };
 
@@ -44,32 +70,30 @@ function GiveawayInfo() {
     const interval = setInterval(updateCountdown, 1000);
 
     return () => clearInterval(interval);
-  }, []);
+  }, [giveaway.active, giveaway.drawAt]);
+
+  if (!giveaway.active) {
+    return (
+      <div style={styles.inactiveInfo}>
+        <div style={styles.inactiveText}>No giveaway active</div>
+      </div>
+    );
+  }
 
   const expired = remaining <= 0;
 
   return (
     <div style={styles.winnerInfo}>
       <div style={styles.winnerTitle}>
-        🏆 NFT {giveawayWinner.nft} — WINNER
+        🏆 NFT {giveaway.nft} — WINNER
       </div>
 
       <div style={styles.winnerDate}>
-        📅 {new Date(giveawayWinner.drawAt).toLocaleDateString("en-GB")}
+        📅 {new Date(giveaway.drawAt).toLocaleDateString("en-GB")}
       </div>
 
       {!expired ? (
-        <>
-          <div style={styles.claimLabel}>
-            ⏳ Time to contact Baby Orca team
-          </div>
-          <div style={styles.countdown}>
-            {formatRemaining(remaining)}
-          </div>
-          <div style={styles.claimText}>
-            24 hours to contact the Baby Orca team
-          </div>
-        </>
+        <div style={styles.countdown}>{formatRemaining(remaining)}</div>
       ) : (
         <div style={styles.expired}>❌ Claim period expired</div>
       )}
@@ -178,26 +202,16 @@ function Dashboard() {
       </div>
 
       {/* =====================================
-          BABY ORCA — ÚNICO PROYECTO
+          4 SORTEOS INDEPENDIENTES DE BABY ORCA
           ===================================== */}
       <div style={styles.grid}>
-        <div style={styles.nft}>
-          <a
-            href="https://opensea.io/es/collection/babyorca/overview"
-            target="_blank"
-            rel="noopener noreferrer"
-            style={styles.nftLink}
-          >
-            <img
-              src="/babyorcaaaaa.png"
-              style={styles.img}
-              alt="Baby Orca"
-            />
-            <p style={styles.projectName}>Baby Orca</p>
-          </a>
+        {giveaways.map((giveaway, index) => (
+          <div key={index} style={styles.nft}>
+            <div style={styles.projectName}>Baby Orca</div>
 
-          <GiveawayInfo />
-        </div>
+            <GiveawayInfo giveaway={giveaway} />
+          </div>
+        ))}
       </div>
 
       <button style={styles.button}>
@@ -264,7 +278,7 @@ const styles = {
 
   grid: {
     display: "grid",
-    gridTemplateColumns: "220px",
+    gridTemplateColumns: "repeat(4, 220px)",
     justifyContent: "center",
     gap: "30px",
     marginBottom: "40px",
@@ -278,28 +292,16 @@ const styles = {
     width: "220px",
   },
 
-  nftLink: {
-    color: "inherit",
-    textDecoration: "none",
-  },
-
-  img: {
-    width: "100%",
-    height: "220px",
-    objectFit: "cover",
-    borderRadius: "10px",
-    marginBottom: "10px",
-  },
-
   projectName: {
-    margin: "0 0 14px 0",
-    fontWeight: "600",
+    fontWeight: "700",
+    fontSize: "18px",
+    marginBottom: "14px",
   },
 
   winnerInfo: {
     borderTop: "1px solid rgba(255,255,255,0.12)",
     paddingTop: "14px",
-    minHeight: "120px",
+    minHeight: "90px",
   },
 
   winnerTitle: {
@@ -314,23 +316,24 @@ const styles = {
     marginBottom: "10px",
   },
 
-  claimLabel: {
-    fontSize: "12px",
-    opacity: 0.75,
-  },
-
   countdown: {
-    fontSize: "24px",
+    fontSize: "26px",
     fontWeight: "700",
-    margin: "5px 0",
+    margin: "8px 0",
     color: "#a29bfe",
     letterSpacing: "1px",
   },
 
-  claimText: {
-    fontSize: "11px",
-    opacity: 0.65,
-    lineHeight: "1.4",
+  inactiveInfo: {
+    borderTop: "1px solid rgba(255,255,255,0.12)",
+    paddingTop: "14px",
+    minHeight: "90px",
+  },
+
+  inactiveText: {
+    fontSize: "13px",
+    opacity: 0.45,
+    paddingTop: "20px",
   },
 
   expired: {
