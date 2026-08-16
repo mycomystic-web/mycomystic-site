@@ -18,9 +18,7 @@ function Whitelist() {
   const [discordVerified] = useState(() => {
   return localStorage.getItem("discord_verified") === "true";
 });
-  const [xVerified] = useState(() => {
-  return localStorage.getItem("x_verified") === "true";
-});
+  
 
   // =====================================
   // VERIFICAR DISCORD
@@ -76,7 +74,7 @@ This signature does not authorize any transaction.`,
 // =====================================
 
 const joinWhitelist = async () => {
-  if (!address || !walletVerified || !discordVerified || !xVerified) return;
+  if (!address || !walletVerified || !discordVerified) return;
 
   setSavingWhitelist(true);
   setWhitelistError("");
@@ -127,69 +125,17 @@ const joinWhitelist = async () => {
             </p>
           </div>
 
-          {xVerified ? (
-  <div style={styles.verified}>
-    ✅ X Verified
-  </div>
-) : (
-  <button
-    style={styles.button}
-    onClick={async () => {
-      const clientId = "U2EwYi1uS1ZIR2N4ZXRFS2o4RGM6MTpjaQ";
-
-      const redirectUri =
-        `${window.location.origin}/x-callback`;
-
-      const state = crypto.randomUUID();
-
-      const codeVerifier =
-        crypto.randomUUID() + crypto.randomUUID();
-
-      const encoder = new TextEncoder();
-      const data = encoder.encode(codeVerifier);
-
-      const hash = await crypto.subtle.digest(
-        "SHA-256",
-        data
+          <button
+        style={styles.button}
+        onClick={() => {
+        window.open(
+        "https://x.com/BabyOrcaX",
+        "_blank"
       );
-
-      const codeChallenge = btoa(
-        String.fromCharCode(...new Uint8Array(hash))
-      )
-        .replace(/\+/g, "-")
-        .replace(/\//g, "_")
-        .replace(/=+$/, "");
-
-      localStorage.setItem(
-        "x_code_verifier",
-        codeVerifier
-      );
-
-      localStorage.setItem(
-        "x_oauth_state",
-        state
-      );
-
-      const xUrl =
-        "https://x.com/i/oauth2/authorize" +
-        `?response_type=code` +
-        `&client_id=${encodeURIComponent(clientId)}` +
-        `&redirect_uri=${encodeURIComponent(redirectUri)}` +
-        `&scope=${encodeURIComponent(
-          "tweet.read users.read follows.read"
-        )}` +
-        `&state=${encodeURIComponent(state)}` +
-        `&code_challenge=${encodeURIComponent(
-          codeChallenge
-        )}` +
-        `&code_challenge_method=S256`;
-
-      window.location.href = xUrl;
-    }}
-  >
-    Follow
-  </button>
-)}
+      }}
+>
+       Follow
+       </button>
         </div>
 
         {/* STEP 2 */}
@@ -298,11 +244,11 @@ const joinWhitelist = async () => {
   style={{
     ...styles.joinButton,
     opacity:
-      discordVerified && walletVerified && xVerified
+      discordVerified && walletVerified  
         ? 1
         : 0.35,
     cursor:
-       discordVerified && walletVerified && xVerified
+       discordVerified && walletVerified  
         ? "pointer"
         : "not-allowed",
   }}
@@ -310,7 +256,6 @@ const joinWhitelist = async () => {
   disabled={
     !discordVerified ||
     !walletVerified ||
-    !xVerified ||
     savingWhitelist ||
     whitelistSuccess
   }
