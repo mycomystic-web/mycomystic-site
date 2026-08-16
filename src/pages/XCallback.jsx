@@ -52,15 +52,29 @@ function XCallback() {
         }
 
         if (!data?.success || !data?.user) {
-          console.error(data);
-          setMessage("Could not verify X account.");
-          return;
-        }
+  console.error(data);
+  localStorage.removeItem("x_verified");
+  setMessage("Could not verify X account.");
+  return;
+}
 
-        localStorage.setItem(
-          "x_verified",
-          "true"
-        );
+if (!data.followsBabyOrca) {
+  console.log("X account does NOT follow BabyOrcaX");
+
+  localStorage.removeItem("x_verified");
+  localStorage.removeItem("x_user");
+
+  setMessage(
+    "You must follow @BabyOrcaX on X before joining the whitelist."
+  );
+
+  return;
+}
+
+localStorage.setItem(
+  "x_verified",
+  "true"
+);
 
         localStorage.setItem(
           "x_user",
