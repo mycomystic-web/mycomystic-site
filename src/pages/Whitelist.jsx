@@ -171,7 +171,7 @@ const joinWhitelist = async () => {
       `&client_id=${encodeURIComponent(clientId)}` +
       `&redirect_uri=${encodeURIComponent(redirectUri)}` +
       `&scope=${encodeURIComponent(
-        "users.read follows.read"
+        "tweet.read users.read follows.read"
       )}` +
       `&state=${encodeURIComponent(state)}` +
       `&code_challenge=${encodeURIComponent(
