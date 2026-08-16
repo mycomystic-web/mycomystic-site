@@ -3,22 +3,56 @@ import { useAccount, useSignMessage } from "wagmi";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { saveWhitelist } from "../lib/saveWhitelist";
 
+// =====================================
+// CONFIGURACIÓN
+// =====================================
+
+// Cuando tengas el post oficial de Baby Orca,
+// cambia solamente este valor.
+const BABY_ORCA_POST_URL = "PENDIENTE";
+
+// =====================================
+// COMPONENTE
+// =====================================
+
 function Whitelist() {
   const { address, isConnected } = useAccount();
   const { signMessageAsync } = useSignMessage();
 
+  // =====================================
+  // ESTADOS
+  // =====================================
+
   const [walletVerified, setWalletVerified] = useState(false);
   const [verifying, setVerifying] = useState(false);
   const [walletError, setWalletError] = useState("");
+
   const [savingWhitelist, setSavingWhitelist] = useState(false);
   const [whitelistSuccess, setWhitelistSuccess] = useState(false);
   const [whitelistError, setWhitelistError] = useState("");
 
-  // Leer si Discord ya fue verificado
+  // =====================================
+  // DISCORD
+  // =====================================
+
   const [discordVerified] = useState(() => {
-  return localStorage.getItem("discord_verified") === "true";
-});
-  
+    return localStorage.getItem("discord_verified") === "true";
+  });
+
+  // =====================================
+  // X ENGAGEMENT
+  // =====================================
+
+  const [xPostLink, setXPostLink] = useState(() => {
+    return localStorage.getItem("baby_orca_x_post_link") || "";
+  });
+
+  const [xVerified, setXVerified] = useState(() => {
+    return localStorage.getItem("baby_orca_x_verified") === "true";
+  });
+
+  const [xVerifying, setXVerifying] = useState(false);
+  const [xError, setXError] = useState("");
 
   // =====================================
   // VERIFICAR DISCORD
@@ -39,7 +73,78 @@ function Whitelist() {
   };
 
   // =====================================
-  // VERIFICAR WALLET CON FIRMA
+  // ABRIR POST DE BABY ORCA
+  // =====================================
+
+  const openBabyOrcaPost = () => {
+    if (BABY_ORCA_POST_URL === "PENDIENTE") {
+      alert("The official Baby Orca post link has not been configured yet.");
+      return;
+    }
+
+    window.open(
+      BABY_ORCA_POST_URL,
+      "_blank",
+      "noopener,noreferrer"
+    );
+  };
+
+  // =====================================
+  // VERIFICAR ENLACE DE X
+  // =====================================
+
+  const verifyXEngagement = async () => {
+    setXError("");
+
+    const link = xPostLink.trim();
+
+    if (!link) {
+      setXError("Please paste your X post link.");
+      return;
+    }
+
+    // Aceptamos solamente enlaces de publicaciones
+    // que contengan /status/ seguido de un ID.
+    const xPostRegex =
+      /^https?:\/\/(www\.)?(x\.com|twitter\.com)\/[^\/\s]+\/status\/\d+(?:\?.*)?$/i;
+
+    if (!xPostRegex.test(link)) {
+      setXVerified(false);
+      localStorage.removeItem("baby_orca_x_verified");
+
+      setXError(
+        "Invalid X post link. Please paste the direct link to your post."
+      );
+
+      return;
+    }
+
+    setXVerifying(true);
+
+    try {
+      // Simulación de verificación propia.
+      // No afirma que X haya confirmado el Like/Repost/Quote.
+      await new Promise((resolve) => setTimeout(resolve, 700));
+
+      localStorage.setItem("baby_orca_x_post_link", link);
+      localStorage.setItem("baby_orca_x_verified", "true");
+
+      setXVerified(true);
+      setXPostLink(link);
+    } catch (error) {
+      console.error(error);
+
+      setXVerified(false);
+      localStorage.removeItem("baby_orca_x_verified");
+
+      setXError("Could not verify the X post link.");
+    } finally {
+      setXVerifying(false);
+    }
+  };
+
+  // =====================================
+  // VERIFICAR WALLET
   // =====================================
 
   const verifyWallet = async () => {
@@ -69,38 +174,66 @@ This signature does not authorize any transaction.`,
       setVerifying(false);
     }
   };
+
   // =====================================
-// GUARDAR WALLET EN WHITELIST
-// =====================================
+  // GUARDAR WALLET
+  // =====================================
 
-const joinWhitelist = async () => {
-  if (!address || !walletVerified || !discordVerified) return;
-
-  setSavingWhitelist(true);
-  setWhitelistError("");
-
-  try {
-    const { error } = await saveWhitelist(address);
-
-    if (error) {
-      if (error.code === "23505") {
-        setWhitelistError("This wallet is already on the whitelist.");
-        return;
-      }
-
-      console.error(error);
-      setWhitelistError("Could not add wallet to whitelist.");
+  const joinWhitelist = async () => {
+    if (
+      !address ||
+      !walletVerified ||
+      !discordVerified ||
+      !xVerified
+    ) {
       return;
     }
 
-    setWhitelistSuccess(true);
-  } catch (error) {
-    console.error(error);
-    setWhitelistError("Could not add wallet to whitelist.");
-  } finally {
-    setSavingWhitelist(false);
-  }
-};
+    setSavingWhitelist(true);
+    setWhitelistError("");
+
+    try {
+      const { error } = await saveWhitelist(address);
+
+      if (error) {
+        if (error.code === "23505") {
+          setWhitelistError(
+            "This wallet is already on the whitelist."
+          );
+          return;
+        }
+
+        console.error(error);
+        setWhitelistError(
+          "Could not add wallet to whitelist."
+        );
+        return;
+      }
+
+      setWhitelistSuccess(true);
+    } catch (error) {
+      console.error(error);
+
+      setWhitelistError(
+        "Could not add wallet to whitelist."
+      );
+    } finally {
+      setSavingWhitelist(false);
+    }
+  };
+
+  // =====================================
+  // REQUISITOS
+  // =====================================
+
+  const allRequirementsCompleted =
+    xVerified &&
+    discordVerified &&
+    walletVerified;
+
+  // =====================================
+  // RENDER
+  // =====================================
 
   return (
     <div style={styles.container}>
@@ -111,53 +244,115 @@ const joinWhitelist = async () => {
         </h1>
 
         <p style={styles.subtitle}>
-          Complete all the requirements below to join the Baby Orca whitelist.
+          Complete all the requirements below to join
+          the Baby Orca whitelist.
         </p>
 
-        {/* STEP 1 */}
+        {/* =====================================
+            STEP 1
+        ===================================== */}
 
         <div style={styles.step}>
           <div>
             <h3>1. Follow Baby Orca on X</h3>
 
             <p style={styles.description}>
-              Follow @babyorcax on X.
-            </p>
-          </div>
-
-          <button
-        style={styles.button}
-        onClick={() => {
-        window.open(
-        "https://x.com/BabyOrcaX",
-        "_blank"
-      );
-      }}
->
-       Follow
-       </button>
-        </div>
-
-        {/* STEP 2 */}
-
-        <div style={styles.step}>
-          <div>
-            <h3>2. Quote the Baby Orca post</h3>
-
-            <p style={styles.description}>
-              Quote our official post and say that you joined the whitelist.
+              Follow @BabyOrcaX on X.
             </p>
           </div>
 
           <button
             style={styles.button}
-            disabled
+            onClick={() => {
+              window.open(
+                "https://x.com/BabyOrcaX",
+                "_blank",
+                "noopener,noreferrer"
+              );
+            }}
           >
-            Coming Soon
+            Follow
           </button>
         </div>
 
-        {/* STEP 3 */}
+        {/* =====================================
+            STEP 2
+        ===================================== */}
+
+        <div style={styles.stepBlock}>
+
+          <div>
+            <h3>2. Engage with the Baby Orca post</h3>
+
+            <p style={styles.description}>
+              Like, repost, and quote the official
+              Baby Orca post. Then paste the link
+              to your X post below.
+            </p>
+          </div>
+
+          <button
+            style={styles.button}
+            onClick={openBabyOrcaPost}
+          >
+            Open Baby Orca Post
+          </button>
+
+          <div style={styles.xBox}>
+
+            <label style={styles.label}>
+              Paste your X post link
+            </label>
+
+            <input
+              type="text"
+              value={xPostLink}
+              onChange={(event) => {
+                setXPostLink(event.target.value);
+                setXVerified(false);
+                localStorage.removeItem(
+                  "baby_orca_x_verified"
+                );
+                setXError("");
+              }}
+              placeholder="https://x.com/username/status/..."
+              style={styles.input}
+            />
+
+            {!xVerified ? (
+              <button
+                style={styles.button}
+                onClick={verifyXEngagement}
+                disabled={xVerifying}
+              >
+                {xVerifying
+                  ? "Verifying..."
+                  : "Verify Engagement"}
+              </button>
+            ) : (
+              <div style={styles.verified}>
+                ✅ X Engagement Submitted
+              </div>
+            )}
+
+            {xError && (
+              <p style={styles.error}>
+                ❌ {xError}
+              </p>
+            )}
+
+            {xVerified && (
+              <p style={styles.smallText}>
+                Your X post link has been accepted.
+              </p>
+            )}
+
+          </div>
+        </div>
+
+        {/* =====================================
+            STEP 3
+        ===================================== */}
 
         <div style={styles.step}>
           <div>
@@ -182,15 +377,19 @@ const joinWhitelist = async () => {
           )}
         </div>
 
-        {/* STEP 4 */}
+        {/* =====================================
+            STEP 4
+        ===================================== */}
 
-        <div style={styles.step}>
+        <div style={styles.stepBlock}>
+
           <div style={{ width: "100%" }}>
 
             <h3>4. Verify your EVM Wallet</h3>
 
             <p style={styles.description}>
-              Connect and sign with the wallet you want to add to the whitelist.
+              Connect and sign with the wallet you
+              want to add to the whitelist.
             </p>
 
             {!isConnected ? (
@@ -232,50 +431,49 @@ const joinWhitelist = async () => {
                   </p>
                 )}
               </>
-
             )}
 
           </div>
         </div>
 
-        {/* FINAL BUTTON */}
+        {/* =====================================
+            FINAL BUTTON
+        ===================================== */}
 
-<button
-  style={{
-    ...styles.joinButton,
-    opacity:
-      discordVerified && walletVerified  
-        ? 1
-        : 0.35,
-    cursor:
-       discordVerified && walletVerified  
-        ? "pointer"
-        : "not-allowed",
-  }}
-  onClick={joinWhitelist}
-  disabled={
-    !discordVerified ||
-    !walletVerified ||
-    savingWhitelist ||
-    whitelistSuccess
-  }
->
-  {savingWhitelist
-    ? "Adding Wallet..."
-    : whitelistSuccess
-    ? "✅ Added to Whitelist"
-    : "Join Whitelist"}
-</button>
+        <button
+          style={{
+            ...styles.joinButton,
+            opacity: allRequirementsCompleted
+              ? 1
+              : 0.35,
+            cursor: allRequirementsCompleted
+              ? "pointer"
+              : "not-allowed",
+          }}
+          onClick={joinWhitelist}
+          disabled={
+            !allRequirementsCompleted ||
+            savingWhitelist ||
+            whitelistSuccess
+          }
+        >
+          {savingWhitelist
+            ? "Adding Wallet..."
+            : whitelistSuccess
+            ? "✅ Added to Whitelist"
+            : "Join Whitelist"}
+        </button>
 
-{whitelistError && (
-  <p style={styles.error}>
-    ❌ {whitelistError}
-  </p>
-)}
+        {whitelistError && (
+          <p style={styles.error}>
+            ❌ {whitelistError}
+          </p>
+        )}
 
-        {(!discordVerified || !walletVerified) && (
+        {!allRequirementsCompleted && (
           <p style={styles.locked}>
-            🔒 Complete all requirements to unlock the whitelist.
+            🔒 Complete all requirements to unlock
+            the whitelist.
           </p>
         )}
 
@@ -285,7 +483,6 @@ const joinWhitelist = async () => {
 }
 
 export default Whitelist;
-
 
 // =====================================
 // ESTILOS
@@ -336,6 +533,15 @@ const styles = {
     justifyContent: "space-between",
     alignItems: "center",
     gap: "20px",
+    flexWrap: "wrap",
+  },
+
+  stepBlock: {
+    background: "rgba(255,255,255,0.05)",
+    border: "1px solid rgba(255,255,255,0.08)",
+    borderRadius: "16px",
+    padding: "22px",
+    marginBottom: "20px",
   },
 
   description: {
@@ -353,6 +559,35 @@ const styles = {
     whiteSpace: "nowrap",
   },
 
+  xBox: {
+    width: "100%",
+    marginTop: "15px",
+    padding: "18px",
+    borderRadius: "12px",
+    background: "#11111c",
+    border: "1px solid rgba(255,255,255,0.12)",
+    boxSizing: "border-box",
+  },
+
+  label: {
+    display: "block",
+    marginBottom: "10px",
+    fontWeight: "bold",
+  },
+
+  input: {
+    width: "100%",
+    boxSizing: "border-box",
+    padding: "14px",
+    marginBottom: "12px",
+    borderRadius: "10px",
+    border: "1px solid rgba(255,255,255,0.18)",
+    background: "#080810",
+    color: "white",
+    outline: "none",
+    fontSize: "15px",
+  },
+
   walletBox: {
     marginTop: "15px",
     marginBottom: "15px",
@@ -367,6 +602,12 @@ const styles = {
     color: "#55efc4",
     fontWeight: "bold",
     marginTop: "15px",
+  },
+
+  smallText: {
+    opacity: 0.6,
+    fontSize: "13px",
+    marginTop: "8px",
   },
 
   error: {
