@@ -6,27 +6,11 @@ import { saveWallet } from "../lib/saveWallet";
 import { supabase } from "../lib/supabase";
 
 // =====================================
-// CONFIGURACIÓN DE GANADORES
+// CONFIGURACIÓN DEL GIVEAWAY BABY ORCA
 // =====================================
-// Para cada nuevo sorteo solamente cambia nft y drawAt.
-// drawAt = fecha y hora exacta en que se anunció el ganador.
-const giveawayWinners = {
-  bytebeings: {
-    nft: "#1253",
-    drawAt: "2026-08-16T17:00:00-04:00",
-  },
-  thePi: {
-    nft: null,
-    drawAt: null,
-  },
-  mycoMystic: {
-    nft: null,
-    drawAt: null,
-  },
-  project4: {
-    nft: null,
-    drawAt: null,
-  },
+const giveawayWinner = {
+  nft: "#1253",
+  drawAt: "2026-08-16T17:00:00-04:00",
 };
 
 const CLAIM_PERIOD = 24 * 60 * 60 * 1000;
@@ -44,19 +28,15 @@ function formatRemaining(milliseconds) {
     .join(":");
 }
 
-function GiveawayInfo({ winner }) {
+function GiveawayInfo() {
   const [remaining, setRemaining] = useState(() => {
-    if (!winner.drawAt) return 0;
-
-    const end = new Date(winner.drawAt).getTime() + CLAIM_PERIOD;
+    const end = new Date(giveawayWinner.drawAt).getTime() + CLAIM_PERIOD;
     return Math.max(0, end - Date.now());
   });
 
   useEffect(() => {
-    if (!winner.drawAt) return;
-
     const updateCountdown = () => {
-      const end = new Date(winner.drawAt).getTime() + CLAIM_PERIOD;
+      const end = new Date(giveawayWinner.drawAt).getTime() + CLAIM_PERIOD;
       setRemaining(Math.max(0, end - Date.now()));
     };
 
@@ -64,30 +44,31 @@ function GiveawayInfo({ winner }) {
     const interval = setInterval(updateCountdown, 1000);
 
     return () => clearInterval(interval);
-  }, [winner.drawAt]);
-
-  if (!winner.nft || !winner.drawAt) {
-    return (
-      <div style={styles.winnerInfo}>
-        <div style={styles.pendingWinner}>Winner will be announced soon</div>
-      </div>
-    );
-  }
+  }, []);
 
   const expired = remaining <= 0;
 
   return (
     <div style={styles.winnerInfo}>
-      <div style={styles.winnerTitle}>🏆 NFT {winner.nft} — WINNER</div>
+      <div style={styles.winnerTitle}>
+        🏆 NFT {giveawayWinner.nft} — WINNER
+      </div>
+
       <div style={styles.winnerDate}>
-        📅 {new Date(winner.drawAt).toLocaleDateString("en-GB")}
+        📅 {new Date(giveawayWinner.drawAt).toLocaleDateString("en-GB")}
       </div>
 
       {!expired ? (
         <>
-          <div style={styles.claimLabel}>⏳ Time to contact Baby Orca team</div>
-          <div style={styles.countdown}>{formatRemaining(remaining)}</div>
-          <div style={styles.claimText}>24 hours to contact the Baby Orca team</div>
+          <div style={styles.claimLabel}>
+            ⏳ Time to contact Baby Orca team
+          </div>
+          <div style={styles.countdown}>
+            {formatRemaining(remaining)}
+          </div>
+          <div style={styles.claimText}>
+            24 hours to contact the Baby Orca team
+          </div>
         </>
       ) : (
         <div style={styles.expired}>❌ Claim period expired</div>
@@ -101,11 +82,12 @@ function Dashboard() {
 
   const [loading, setLoading] = useState(false);
   const [hasAccess, setHasAccess] = useState(false);
-  const [total, setTotal] = useState(0);
 
   const alreadySent = useRef(false);
 
-  // 🔥 FIX: detectar cambio de cuenta en MetaMask
+  // =====================================
+  // DETECTAR CAMBIO DE CUENTA
+  // =====================================
   useEffect(() => {
     if (!window.ethereum) return;
 
@@ -121,6 +103,9 @@ function Dashboard() {
     };
   }, []);
 
+  // =====================================
+  // VERIFICAR NFT
+  // =====================================
   useEffect(() => {
     async function verify() {
       if (!isConnected) return;
@@ -135,7 +120,7 @@ function Dashboard() {
 
         if (access && address && !alreadySent.current) {
           alreadySent.current = true;
-          await saveWallet(address, "MycoMystic");
+          await saveWallet(address, "Baby Orca");
           console.log("Wallet válida:", address);
         }
       } catch (e) {
@@ -148,8 +133,9 @@ function Dashboard() {
     verify();
   }, [address, isConnected]);
 
-  // ---------------- UI ----------------
-
+  // =====================================
+  // UI
+  // =====================================
   if (!isConnected) {
     return (
       <div style={styles.center}>
@@ -171,37 +157,10 @@ function Dashboard() {
     );
   }
 
-  const projects = [
-    {
-      key: "bytebeings",
-      name: "bytebeings",
-      image: "/nft1.png",
-      url: "https://opensea.io/es/collection/bytebeings/overview",
-    },
-    {
-      key: "thePi",
-      name: "the-pi",
-      image: "/nft2.png",
-      url: "https://opensea.io/es/collection/the-pi/overview",
-    },
-    {
-      key: "mycoMystic",
-      name: "mycomystic",
-      image: "/nft3.png",
-      url: "https://opensea.io/es/collection/mycomystic",
-    },
-    {
-      key: "project4",
-      name: "Proyecto 4",
-      image: "/nft4.png",
-      url: "https://opensea.io/collection/tu-proyecto-4",
-    },
-  ];
-
   return (
     <div style={styles.container}>
       <div style={styles.header}>
-        <h1 style={styles.logo}>MycoMystic</h1>
+        <h1 style={styles.logo}>Baby Orca</h1>
         <div style={styles.wallet}>{address}</div>
       </div>
 
@@ -209,7 +168,7 @@ function Dashboard() {
         <div>
           <h2>🎉 You are participating</h2>
           <p style={{ opacity: 0.7 }}>
-            Your wallet is already in the draw
+            Your wallet is already in the Baby Orca draw
           </p>
         </div>
 
@@ -218,33 +177,41 @@ function Dashboard() {
         </div>
       </div>
 
+      {/* =====================================
+          BABY ORCA — ÚNICO PROYECTO
+          ===================================== */}
       <div style={styles.grid}>
-        {projects.map((project) => (
-          <div key={project.key} style={styles.nft}>
-            <a
-              href={project.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              style={styles.nftLink}
-            >
-              <img src={project.image} style={styles.img} alt={project.name} />
-              <p style={styles.projectName}>{project.name}</p>
-            </a>
+        <div style={styles.nft}>
+          <a
+            href="https://opensea.io/es/collection/babyorca/overview"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={styles.nftLink}
+          >
+            <img
+              src="/babyorcaaaaa.png"
+              style={styles.img}
+              alt="Baby Orca"
+            />
+            <p style={styles.projectName}>Baby Orca</p>
+          </a>
 
-            <GiveawayInfo winner={giveawayWinners[project.key]} />
-          </div>
-        ))}
+          <GiveawayInfo />
+        </div>
       </div>
 
-      <button style={styles.button}>View upcoming giveaways</button>
+      <button style={styles.button}>
+        View upcoming Baby Orca giveaways
+      </button>
     </div>
   );
 }
 
 export default Dashboard;
 
-// ---------------- ESTILOS ----------------
-
+// =====================================
+// ESTILOS
+// =====================================
 const styles = {
   container: {
     minHeight: "100vh",
@@ -265,11 +232,13 @@ const styles = {
   header: {
     display: "flex",
     justifyContent: "space-between",
+    alignItems: "center",
     marginBottom: "40px",
   },
 
   logo: {
     fontSize: "28px",
+    margin: 0,
   },
 
   wallet: {
@@ -295,7 +264,7 @@ const styles = {
 
   grid: {
     display: "grid",
-    gridTemplateColumns: "repeat(auto-fit, minmax(220px, 220px))",
+    gridTemplateColumns: "220px",
     justifyContent: "center",
     gap: "30px",
     marginBottom: "40px",
@@ -362,12 +331,6 @@ const styles = {
     fontSize: "11px",
     opacity: 0.65,
     lineHeight: "1.4",
-  },
-
-  pendingWinner: {
-    fontSize: "12px",
-    opacity: 0.55,
-    paddingTop: "18px",
   },
 
   expired: {
