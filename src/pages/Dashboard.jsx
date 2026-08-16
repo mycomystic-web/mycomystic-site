@@ -93,7 +93,12 @@ function GiveawayInfo({ giveaway }) {
       </div>
 
       {!expired ? (
-        <div style={styles.countdown}>{formatRemaining(remaining)}</div>
+        <>
+          <div style={styles.countdown}>{formatRemaining(remaining)}</div>
+          <div style={styles.claimReminder}>
+            Reclama tu premio con el equipo de Baby Orca antes de que se agote el tiempo.
+          </div>
+        </>
       ) : (
         <div style={styles.expired}>❌ Claim period expired</div>
       )}
@@ -301,7 +306,7 @@ const styles = {
   winnerInfo: {
     borderTop: "1px solid rgba(255,255,255,0.12)",
     paddingTop: "14px",
-    minHeight: "90px",
+    minHeight: "110px",
   },
 
   winnerTitle: {
@@ -322,6 +327,13 @@ const styles = {
     margin: "8px 0",
     color: "#a29bfe",
     letterSpacing: "1px",
+  },
+
+  claimReminder: {
+    fontSize: "11px",
+    lineHeight: "1.4",
+    opacity: 0.7,
+    marginTop: "4px",
   },
 
   inactiveInfo: {
