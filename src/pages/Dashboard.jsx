@@ -96,7 +96,7 @@ function GiveawayInfo({ giveaway }) {
         <>
           <div style={styles.countdown}>{formatRemaining(remaining)}</div>
           <div style={styles.claimReminder}>
-            Reclama tu premio con el equipo de Baby Orca antes de que se agote el tiempo.
+            Claim your prize with the Baby Orca team before the time runs out.
           </div>
         </>
       ) : (
