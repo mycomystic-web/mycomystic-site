@@ -18,7 +18,9 @@ function Whitelist() {
   const [discordVerified] = useState(() => {
   return localStorage.getItem("discord_verified") === "true";
 });
-  
+  const [xVerified] = useState(() => {
+  return localStorage.getItem("x_verified") === "true";
+});
 
   // =====================================
   // VERIFICAR DISCORD
@@ -74,7 +76,7 @@ This signature does not authorize any transaction.`,
 // =====================================
 
 const joinWhitelist = async () => {
-  if (!address || !walletVerified || !discordVerified) return;
+  if (!address || !walletVerified || !discordVerified || !xVerified) return;
 
   setSavingWhitelist(true);
   setWhitelistError("");
@@ -290,11 +292,11 @@ const joinWhitelist = async () => {
   style={{
     ...styles.joinButton,
     opacity:
-      discordVerified && walletVerified
+      discordVerified && walletVerified && xVerified
         ? 1
         : 0.35,
     cursor:
-      discordVerified && walletVerified
+       discordVerified && walletVerified && xVerified
         ? "pointer"
         : "not-allowed",
   }}
@@ -302,6 +304,7 @@ const joinWhitelist = async () => {
   disabled={
     !discordVerified ||
     !walletVerified ||
+    !xVerified ||
     savingWhitelist ||
     whitelistSuccess
   }
