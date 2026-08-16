@@ -4,6 +4,98 @@ import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { checkNFTOwnership } from "../lib/checkNFT";
 import { saveWallet } from "../lib/saveWallet";
 import { supabase } from "../lib/supabase";
+
+// =====================================
+// CONFIGURACIÓN DE GANADORES
+// =====================================
+// Para cada nuevo sorteo solamente cambia nft y drawAt.
+// drawAt = fecha y hora exacta en que se anunció el ganador.
+const giveawayWinners = {
+  bytebeings: {
+    nft: "#1253",
+    drawAt: "2026-08-16T17:00:00-04:00",
+  },
+  thePi: {
+    nft: null,
+    drawAt: null,
+  },
+  mycoMystic: {
+    nft: null,
+    drawAt: null,
+  },
+  project4: {
+    nft: null,
+    drawAt: null,
+  },
+};
+
+const CLAIM_PERIOD = 24 * 60 * 60 * 1000;
+
+function formatRemaining(milliseconds) {
+  if (milliseconds <= 0) return "00:00:00";
+
+  const totalSeconds = Math.floor(milliseconds / 1000);
+  const hours = Math.floor(totalSeconds / 3600);
+  const minutes = Math.floor((totalSeconds % 3600) / 60);
+  const seconds = totalSeconds % 60;
+
+  return [hours, minutes, seconds]
+    .map((value) => String(value).padStart(2, "0"))
+    .join(":");
+}
+
+function GiveawayInfo({ winner }) {
+  const [remaining, setRemaining] = useState(() => {
+    if (!winner.drawAt) return 0;
+
+    const end = new Date(winner.drawAt).getTime() + CLAIM_PERIOD;
+    return Math.max(0, end - Date.now());
+  });
+
+  useEffect(() => {
+    if (!winner.drawAt) return;
+
+    const updateCountdown = () => {
+      const end = new Date(winner.drawAt).getTime() + CLAIM_PERIOD;
+      setRemaining(Math.max(0, end - Date.now()));
+    };
+
+    updateCountdown();
+    const interval = setInterval(updateCountdown, 1000);
+
+    return () => clearInterval(interval);
+  }, [winner.drawAt]);
+
+  if (!winner.nft || !winner.drawAt) {
+    return (
+      <div style={styles.winnerInfo}>
+        <div style={styles.pendingWinner}>Winner will be announced soon</div>
+      </div>
+    );
+  }
+
+  const expired = remaining <= 0;
+
+  return (
+    <div style={styles.winnerInfo}>
+      <div style={styles.winnerTitle}>🏆 NFT {winner.nft} — WINNER</div>
+      <div style={styles.winnerDate}>
+        📅 {new Date(winner.drawAt).toLocaleDateString("en-GB")}
+      </div>
+
+      {!expired ? (
+        <>
+          <div style={styles.claimLabel}>⏳ Time to contact Baby Orca team</div>
+          <div style={styles.countdown}>{formatRemaining(remaining)}</div>
+          <div style={styles.claimText}>24 hours to contact the Baby Orca team</div>
+        </>
+      ) : (
+        <div style={styles.expired}>❌ Claim period expired</div>
+      )}
+    </div>
+  );
+}
+
 function Dashboard() {
   const { address, isConnected } = useAccount();
 
@@ -19,8 +111,6 @@ function Dashboard() {
 
     const handleAccountsChanged = (accounts) => {
       console.log("Cuenta cambiada:", accounts);
-
-      // 🔥 FORZAR REFRESCO TOTAL
       window.location.reload();
     };
 
@@ -38,21 +128,16 @@ function Dashboard() {
       setLoading(true);
 
       try {
-        // 🔥 PASAMOS LA ADDRESS
         const result = await checkNFTOwnership(address);
         const access = result.hasAccess || result === true;
 
         setHasAccess(access);
 
         if (access && address && !alreadySent.current) {
-        alreadySent.current = true;
-       await saveWallet(address, "MycoMystic");
-       console.log("Wallet válida:", address);
-       }
-
-       // Temporalmente
-        
-
+          alreadySent.current = true;
+          await saveWallet(address, "MycoMystic");
+          console.log("Wallet válida:", address);
+        }
       } catch (e) {
         console.error(e);
       } finally {
@@ -86,9 +171,35 @@ function Dashboard() {
     );
   }
 
+  const projects = [
+    {
+      key: "bytebeings",
+      name: "bytebeings",
+      image: "/nft1.png",
+      url: "https://opensea.io/es/collection/bytebeings/overview",
+    },
+    {
+      key: "thePi",
+      name: "the-pi",
+      image: "/nft2.png",
+      url: "https://opensea.io/es/collection/the-pi/overview",
+    },
+    {
+      key: "mycoMystic",
+      name: "mycomystic",
+      image: "/nft3.png",
+      url: "https://opensea.io/es/collection/mycomystic",
+    },
+    {
+      key: "project4",
+      name: "Proyecto 4",
+      image: "/nft4.png",
+      url: "https://opensea.io/collection/tu-proyecto-4",
+    },
+  ];
+
   return (
     <div style={styles.container}>
-
       <div style={styles.header}>
         <h1 style={styles.logo}>MycoMystic</h1>
         <div style={styles.wallet}>{address}</div>
@@ -104,38 +215,28 @@ function Dashboard() {
 
         <div style={styles.counterBox}>
           <span>Total participants</span>
-        
         </div>
       </div>
 
       <div style={styles.grid}>
+        {projects.map((project) => (
+          <div key={project.key} style={styles.nft}>
+            <a
+              href={project.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              style={styles.nftLink}
+            >
+              <img src={project.image} style={styles.img} alt={project.name} />
+              <p style={styles.projectName}>{project.name}</p>
+            </a>
 
-  <a href="https://opensea.io/es/collection/bytebeings/overview" target="_blank" style={styles.nft}>
-    <img src="/nft1.png" style={styles.img} />
-    <p>bytebeings</p>
-  </a>
+            <GiveawayInfo winner={giveawayWinners[project.key]} />
+          </div>
+        ))}
+      </div>
 
-  <a href="https://opensea.io/es/collection/the-pi/overview" target="_blank" style={styles.nft}>
-    <img src="/nft2.png" style={styles.img} />
-    <p>the-pi</p>
-  </a>
-
-  <a href="https://opensea.io/es/collection/mycomystic" target="_blank" style={styles.nft}>
-    <img src="/nft3.png" style={styles.img} />
-    <p>mycomystic</p>
-  </a>
-
-  <a href="https://opensea.io/collection/tu-proyecto-4" target="_blank" style={styles.nft}>
-    <img src="/nft4.png" style={styles.img} />
-    <p>Proyecto 4</p>
-  </a>
-
-</div>
-
-      <button style={styles.button}>
-        View upcoming giveaways
-      </button>
-
+      <button style={styles.button}>View upcoming giveaways</button>
     </div>
   );
 }
@@ -192,36 +293,89 @@ const styles = {
     textAlign: "center",
   },
 
-  counter: {
-    fontSize: "48px",
-    marginTop: "10px",
-    color: "#a29bfe",
+  grid: {
+    display: "grid",
+    gridTemplateColumns: "repeat(auto-fit, minmax(220px, 220px))",
+    justifyContent: "center",
+    gap: "30px",
+    marginBottom: "40px",
   },
 
-  grid: {
-  display: "grid",
-  gridTemplateColumns: "repeat(auto-fit, minmax(220px, 220px))",
-  justifyContent: "center", // 🔥 centra todo
-  gap: "30px",
-  marginBottom: "40px",
-},
-
   nft: {
-  background: "#111",
-  padding: "15px",
-  borderRadius: "15px",
-  textAlign: "center",
-  cursor: "pointer",
-  width: "220px", // 🔥 tamaño fijo
-},
+    background: "#111",
+    padding: "15px",
+    borderRadius: "15px",
+    textAlign: "center",
+    width: "220px",
+  },
+
+  nftLink: {
+    color: "inherit",
+    textDecoration: "none",
+  },
 
   img: {
-  width: "100%",
-  height: "220px",
-  objectFit: "cover", // 🔥 evita deformación
-  borderRadius: "10px",
-  marginBottom: "10px",
-},
+    width: "100%",
+    height: "220px",
+    objectFit: "cover",
+    borderRadius: "10px",
+    marginBottom: "10px",
+  },
+
+  projectName: {
+    margin: "0 0 14px 0",
+    fontWeight: "600",
+  },
+
+  winnerInfo: {
+    borderTop: "1px solid rgba(255,255,255,0.12)",
+    paddingTop: "14px",
+    minHeight: "120px",
+  },
+
+  winnerTitle: {
+    fontSize: "14px",
+    fontWeight: "700",
+    marginBottom: "8px",
+  },
+
+  winnerDate: {
+    fontSize: "13px",
+    opacity: 0.75,
+    marginBottom: "10px",
+  },
+
+  claimLabel: {
+    fontSize: "12px",
+    opacity: 0.75,
+  },
+
+  countdown: {
+    fontSize: "24px",
+    fontWeight: "700",
+    margin: "5px 0",
+    color: "#a29bfe",
+    letterSpacing: "1px",
+  },
+
+  claimText: {
+    fontSize: "11px",
+    opacity: 0.65,
+    lineHeight: "1.4",
+  },
+
+  pendingWinner: {
+    fontSize: "12px",
+    opacity: 0.55,
+    paddingTop: "18px",
+  },
+
+  expired: {
+    fontSize: "13px",
+    fontWeight: "700",
+    opacity: 0.75,
+    paddingTop: "12px",
+  },
 
   button: {
     background: "linear-gradient(135deg, #6c5ce7, #a29bfe)",
