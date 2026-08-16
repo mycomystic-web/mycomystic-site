@@ -127,63 +127,69 @@ const joinWhitelist = async () => {
             </p>
           </div>
 
-          <button
-  style={styles.button}
-  onClick={async () => {
-    const clientId = "U2EwYi1uS1ZIR2N4ZXRFS2o4RGM6MTpjaQ";
+          {xVerified ? (
+  <div style={styles.verified}>
+    ✅ X Verified
+  </div>
+) : (
+  <button
+    style={styles.button}
+    onClick={async () => {
+      const clientId = "U2EwYi1uS1ZIR2N4ZXRFS2o4RGM6MTpjaQ";
 
-    const redirectUri =
-      `${window.location.origin}/x-callback`;
+      const redirectUri =
+        `${window.location.origin}/x-callback`;
 
-    const state = crypto.randomUUID();
+      const state = crypto.randomUUID();
 
-    const codeVerifier = crypto.randomUUID() + crypto.randomUUID();
+      const codeVerifier =
+        crypto.randomUUID() + crypto.randomUUID();
 
-    const encoder = new TextEncoder();
+      const encoder = new TextEncoder();
+      const data = encoder.encode(codeVerifier);
 
-    const data = encoder.encode(codeVerifier);
+      const hash = await crypto.subtle.digest(
+        "SHA-256",
+        data
+      );
 
-    const hash = await crypto.subtle.digest(
-      "SHA-256",
-      data
-    );
+      const codeChallenge = btoa(
+        String.fromCharCode(...new Uint8Array(hash))
+      )
+        .replace(/\+/g, "-")
+        .replace(/\//g, "_")
+        .replace(/=+$/, "");
 
-    const codeChallenge = btoa(
-      String.fromCharCode(...new Uint8Array(hash))
-    )
-      .replace(/\+/g, "-")
-      .replace(/\//g, "_")
-      .replace(/=+$/, "");
+      localStorage.setItem(
+        "x_code_verifier",
+        codeVerifier
+      );
 
-    localStorage.setItem(
-      "x_code_verifier",
-      codeVerifier
-    );
+      localStorage.setItem(
+        "x_oauth_state",
+        state
+      );
 
-    localStorage.setItem(
-      "x_oauth_state",
-      state
-    );
+      const xUrl =
+        "https://x.com/i/oauth2/authorize" +
+        `?response_type=code` +
+        `&client_id=${encodeURIComponent(clientId)}` +
+        `&redirect_uri=${encodeURIComponent(redirectUri)}` +
+        `&scope=${encodeURIComponent(
+          "tweet.read users.read follows.read"
+        )}` +
+        `&state=${encodeURIComponent(state)}` +
+        `&code_challenge=${encodeURIComponent(
+          codeChallenge
+        )}` +
+        `&code_challenge_method=S256`;
 
-    const xUrl =
-      "https://x.com/i/oauth2/authorize" +
-      `?response_type=code` +
-      `&client_id=${encodeURIComponent(clientId)}` +
-      `&redirect_uri=${encodeURIComponent(redirectUri)}` +
-      `&scope=${encodeURIComponent(
-        "tweet.read users.read follows.read"
-      )}` +
-      `&state=${encodeURIComponent(state)}` +
-      `&code_challenge=${encodeURIComponent(
-        codeChallenge
-      )}` +
-      `&code_challenge_method=S256`;
-
-    window.location.href = xUrl;
-  }}
->
-  Follow
-</button>
+      window.location.href = xUrl;
+    }}
+  >
+    Follow
+  </button>
+)}
         </div>
 
         {/* STEP 2 */}
