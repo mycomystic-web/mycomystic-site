@@ -4,6 +4,7 @@ import Dashboard from "./pages/Dashboard";
 import Whitelist from "./pages/Whitelist";
 import VerifyPage from "./pages/verify";
 import Navbar from "./components/Navbar";
+import XCallback from "./pages/XCallback";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/whitelist" element={<Whitelist />} />
+        <Route path="/x-callback" element={<XCallback />} />
         <Route path="/verify" element={<VerifyPage />} />
       </Routes>
     </div>

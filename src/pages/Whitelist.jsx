@@ -135,7 +135,7 @@ const joinWhitelist = async () => {
 
     const state = crypto.randomUUID();
 
-    const codeVerifier = crypto.randomUUID();
+    const codeVerifier = crypto.randomUUID() + crypto.randomUUID();
 
     const encoder = new TextEncoder();
 
