@@ -657,66 +657,43 @@ const styles = {
 // RESPONSIVE BREAKPOINTS
 // =====================================
 
-const responsiveStyle = document.createElement("style");
+if (
+  typeof document !== "undefined" &&
+  !document.getElementById("baby-orca-history-responsive")
+) {
+  const responsiveStyle = document.createElement("style");
 
-responsiveStyle.innerHTML = `
+  responsiveStyle.id = "baby-orca-history-responsive";
 
-/* =====================================
-   LAPTOP / MEDIUM DESKTOP
-   4 CARDS
-===================================== */
+  responsiveStyle.innerHTML = `
 
-@media (max-width: 1250px) {
+    /* LAPTOP */
+    @media (max-width: 1250px) {
+      [data-baby-orca-history-grid] {
+        grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+      }
+    }
 
-  [data-baby-orca-history-grid] {
-    grid-template-columns:
-      repeat(4, minmax(0, 1fr)) !important;
-  }
+    /* TABLET */
+    @media (max-width: 900px) {
+      [data-baby-orca-history-grid] {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+      }
+    }
 
+    /* MOBILE */
+    @media (max-width: 650px) {
+      [data-baby-orca-history-grid] {
+        grid-template-columns: 1fr !important;
+        gap: 16px !important;
+      }
+
+      [data-baby-orca-history-grid] article {
+        width: 100% !important;
+        min-width: 0 !important;
+      }
+    }
+  `;
+
+  document.head.appendChild(responsiveStyle);
 }
-
-/* =====================================
-   TABLET
-   3 CARDS
-===================================== */
-
-@media (max-width: 950px) {
-
-  [data-baby-orca-history-grid] {
-    grid-template-columns:
-      repeat(3, minmax(0, 1fr)) !important;
-  }
-
-}
-
-/* =====================================
-   MOBILE
-   2 CARDS
-===================================== */
-
-@media (max-width: 650px) {
-
-  [data-baby-orca-history-grid] {
-    grid-template-columns:
-      repeat(2, minmax(0, 1fr)) !important;
-
-    gap: 12px !important;
-  }
-
-}
-
-/* =====================================
-   SMALL MOBILE
-   1 CARD
-===================================== */
-
-@media (max-width: 380px) {
-
-  [data-baby-orca-history-grid] {
-    grid-template-columns:
-      1fr !important;
-  }
-
-}
-
-`;
