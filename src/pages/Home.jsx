@@ -69,6 +69,12 @@ function Home() {
           >
            Join Whitelist
          </button>
+         <button
+            style={styles.btnSecondary}
+            onClick={() => navigate("/history")}
+          >
+            🐋 Baby Orca History
+         </button>
         </div>
         <p
              style={{
