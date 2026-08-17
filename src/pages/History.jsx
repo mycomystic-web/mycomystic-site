@@ -116,7 +116,7 @@ function History() {
 
         <header style={styles.header}>
           <h1 style={styles.title}>
-            🐋 Baby Orca History
+             Baby Orca History
           </h1>
 
           <p style={styles.subtitle}>
@@ -211,7 +211,7 @@ function History() {
                 <div style={styles.cardHeader}>
 
                   <div style={styles.orcaCircle}>
-                    🐋
+                    
                   </div>
 
                   <div>
@@ -300,7 +300,7 @@ function History() {
           <div style={styles.noResults}>
 
             <div style={styles.noResultsIcon}>
-              🐋
+              
             </div>
 
             <h3 style={styles.noResultsTitle}>

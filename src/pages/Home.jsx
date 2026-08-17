@@ -73,7 +73,7 @@ function Home() {
             style={styles.btnSecondary}
             onClick={() => navigate("/history")}
           >
-            🐋 Baby Orca History
+               Baby Orca History
          </button>
         </div>
         <p
