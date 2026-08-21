@@ -19,7 +19,7 @@ function Navbar() {
       </div>
 
       {/* BOTÓN WALLET */}
-      <ConnectButton />
+      {/* <ConnectButton /> */}
 
     </div>
   );

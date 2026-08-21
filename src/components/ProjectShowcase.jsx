@@ -36,7 +36,7 @@ export default function ProjectShowcase() {
 
         {/* CONNECT + RAFFLE */}
         <div className="flex flex-col items-center space-y-4">
-          <ConnectButton />
+          {/* <ConnectButton /> */}
           <a
             href="/raffle"
             className="bg-[#0080ff] hover:bg-[#66b2ff] text-white font-semibold px-6 py-2 rounded-full shadow-md transition flex items-center gap-2"

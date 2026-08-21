@@ -169,7 +169,7 @@ function Dashboard() {
     return (
       <div style={styles.center}>
         <h2>Connect your wallet</h2>
-        <ConnectButton />
+        {/* <ConnectButton /> */}
       </div>
     );
   }

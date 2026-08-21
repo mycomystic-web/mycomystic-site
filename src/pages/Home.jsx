@@ -54,7 +54,7 @@ function Home() {
 
         {/* BOTONES */}
         <div style={styles.buttons}>
-          <ConnectButton label="Connect Wallet" />
+          {/* <ConnectButton label="Connect Wallet" /> */}
 
           <button
             style={styles.btnSecondary}

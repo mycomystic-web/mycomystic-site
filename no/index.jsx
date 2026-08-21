@@ -70,7 +70,7 @@ export default function ProjectShowcase() {
 
         {/* CONNECT + STATUS */}
         <div className="flex flex-col items-center space-y-4">
-          <ConnectButton />
+          {/* <ConnectButton /> */}
           {message && (
             <p className="text-lg font-semibold text-[#66b2ff]" style={{ textShadow }}>
               {message}
