@@ -1,6 +1,4 @@
 import { useState } from "react";
-import { useAccount, useSignMessage } from "wagmi";
-import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { saveWhitelist } from "../lib/saveWhitelist";
 
 // =====================================
@@ -16,21 +14,18 @@ const BABY_ORCA_POST_URL = "https://x.com/BabyOrcaX/status/2090757616834171360";
 // =====================================
 
 function Whitelist() {
-  const { address, isConnected } = useAccount();
-  const { signMessageAsync } = useSignMessage();
+  
 
   // =====================================
   // ESTADOS
   // =====================================
 
-  const [walletVerified, setWalletVerified] = useState(false);
-  const [verifying, setVerifying] = useState(false);
+  const [walletAddress, setWalletAddress] = useState("");
   const [walletError, setWalletError] = useState("");
 
   const [savingWhitelist, setSavingWhitelist] = useState(false);
   const [whitelistSuccess, setWhitelistSuccess] = useState(false);
   const [whitelistError, setWhitelistError] = useState("");
-
   // =====================================
   // DISCORD
   // =====================================
@@ -143,57 +138,29 @@ function Whitelist() {
     }
   };
 
-  // =====================================
-  // VERIFICAR WALLET
-  // =====================================
-
-  const verifyWallet = async () => {
-    if (!address) return;
-
-    setVerifying(true);
-    setWalletError("");
-
-    try {
-      await signMessageAsync({
-        message: `Baby Orca Whitelist
-
-I confirm that I control this wallet:
-
-${address}
-
-This signature does not authorize any transaction.`,
-      });
-
-      setWalletVerified(true);
-    } catch (error) {
-      console.error(error);
-
-      setWalletVerified(false);
-      setWalletError("Signature cancelled or failed.");
-    } finally {
-      setVerifying(false);
-    }
-  };
+  
 
   // =====================================
   // GUARDAR WALLET
   // =====================================
 
   const joinWhitelist = async () => {
-    if (
-      !address ||
-      !walletVerified ||
-      !discordVerified ||
-      !xVerified
-    ) {
-      return;
-    }
+    const wallet = walletAddress.trim();
+
+   if (!discordVerified || !xVerified) {
+    return;
+  }
+
+   if (!/^0x[a-fA-F0-9]{40}$/.test(wallet)) {
+   setWhitelistError("Please enter a valid EVM wallet address.");
+   return;
+  }
 
     setSavingWhitelist(true);
     setWhitelistError("");
 
     try {
-      const { error } = await saveWhitelist(address);
+      const { error } = await saveWhitelist(wallet);
 
       if (error) {
         if (error.code === "23505") {
@@ -226,10 +193,13 @@ This signature does not authorize any transaction.`,
   // REQUISITOS
   // =====================================
 
+  const validWallet =
+  /^0x[a-fA-F0-9]{40}$/.test(walletAddress.trim());
+
   const allRequirementsCompleted =
-    xVerified &&
-    discordVerified &&
-    walletVerified;
+  xVerified &&
+  discordVerified &&
+  validWallet;
 
   // =====================================
   // RENDER
@@ -377,65 +347,49 @@ This signature does not authorize any transaction.`,
           )}
         </div>
 
-        {/* =====================================
-            STEP 4
-        ===================================== */}
+       {/* =====================================
+    STEP 4
+===================================== */}
 
-        <div style={styles.stepBlock}>
+<div style={styles.stepBlock}>
 
-          <div style={{ width: "100%" }}>
+  <div style={{ width: "100%" }}>
 
-            <h3>4. Verify your EVM Wallet</h3>
+    <h3>4. Enter your EVM Wallet</h3>
 
-            <p style={styles.description}>
-              Connect and sign with the wallet you
-              want to add to the whitelist.
-            </p>
+    <p style={styles.description}>
+      Enter the wallet address you want to add to the whitelist.
+    </p>
 
-            {!isConnected ? (
+    <input
+      type="text"
+      value={walletAddress}
+      onChange={(event) => {
+        setWalletAddress(event.target.value);
+        setWalletError("");
+        setWhitelistError("");
+      }}
+      placeholder="0x..."
+      style={styles.input}
+      autoComplete="off"
+      spellCheck="false"
+    />
 
-              <div style={{ marginTop: "15px" }}>
-                <ConnectButton />
-              </div>
+    {walletAddress && !validWallet && (
+      <p style={styles.error}>
+        ❌ Please enter a valid EVM wallet address.
+      </p>
+    )}
 
-            ) : (
+    {validWallet && (
+      <p style={styles.verified}>
+        ✅ Valid Wallet Address
+      </p>
+    )}
 
-              <>
-                <div style={styles.walletBox}>
-                  {address}
-                </div>
+  </div>
 
-                {!walletVerified ? (
-
-                  <button
-                    style={styles.button}
-                    onClick={verifyWallet}
-                    disabled={verifying}
-                  >
-                    {verifying
-                      ? "Waiting for signature..."
-                      : "Sign Wallet"}
-                  </button>
-
-                ) : (
-
-                  <p style={styles.verified}>
-                    ✅ Wallet Verified
-                  </p>
-
-                )}
-
-                {walletError && (
-                  <p style={styles.error}>
-                    ❌ {walletError}
-                  </p>
-                )}
-              </>
-            )}
-
-          </div>
-        </div>
-
+</div>
         {/* =====================================
             FINAL BUTTON
         ===================================== */}
