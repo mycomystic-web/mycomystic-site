@@ -9,7 +9,7 @@ import { saveWhitelist } from "../lib/saveWhitelist";
 
 // Cuando tengas el post oficial de Baby Orca,
 // cambia solamente este valor.
-const BABY_ORCA_POST_URL = "PENDIENTE";
+const BABY_ORCA_POST_URL = "https://x.com/BabyOrcaX/status/2090757616834171360";
 
 // =====================================
 // COMPONENTE
