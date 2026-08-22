@@ -5,47 +5,43 @@ import { useNavigate } from "react-router-dom";
 // DATOS DE PRUEBA
 // =====================================
 
-const babyOrcaHistory = {
-  1230: [
-    {
-      date: "August 26, 2026",
-      title: "Coming Soon #001",
-      reward: "The history of this Baby Orca will begin after the mint.",
-    },
-  ],
+const babyOrcaHistory = [
+  {
+    id: "CONTEST",
+    date: "August 18, 2026",
+    title: "ART CONTEST",
+    reward: "$60 Prize Pool + Free NFTs",
+  },
 
-  4581: [
-    {
-      date: "August 26, 2026",
-      title: "Coming Soon #002",
-      reward: "The history of this Baby Orca will begin after the mint.",
-    },
-  ],
+  {
+    id: "1230",
+    date: "August 26, 2026",
+    title: "Coming Soon #001",
+    reward: "The history of this Baby Orca will begin after the mint.",
+  },
 
-  777: [
-    {
-      date: "August 26, 2026",
-      title: "Coming Soon",
-      reward: "The history of this Baby Orca will begin after the mint.",
-    },
-  ],
+  {
+    id: "4581",
+    date: "August 26, 2026",
+    title: "Coming Soon #002",
+    reward: "The history of this Baby Orca will begin after the mint.",
+  },
 
-  2041: [
-    {
-      date: "August 26, 2026",
-      title: "Coming Soon #003",
-      reward: "The history of this Baby Orca will begin after the mint.",
-    },
-  ],
+  {
+    id: "2041",
+    date: "August 26, 2026",
+    title: "Coming Soon #003",
+    reward: "The history of this Baby Orca will begin after the mint.",
+  },
 
-  6500: [
-    {
-      date: "August 26, 2026",
-      title: "Coming Soon",
-      reward: "The history of this Baby Orca will begin after the mint.",
-    },
-  ],
-};
+  {
+    id: "6500",
+    date: "August 26, 2026",
+    title: "Coming Soon",
+    reward: "The history of this Baby Orca will begin after the mint.",
+  },
+];
+
 
 // =====================================
 // HISTORY PAGE
@@ -57,14 +53,14 @@ function History() {
   const [tokenId, setTokenId] = useState("");
   const [searchId, setSearchId] = useState(null);
 
-  const historyEntries = Object.entries(babyOrcaHistory);
+  const historyEntries = babyOrcaHistory;
 
   const visibleEntries =
-    searchId === null
-      ? historyEntries
-      : historyEntries.filter(
-          ([id]) => id === String(searchId)
-        );
+  searchId === null
+    ? historyEntries
+    : historyEntries.filter(
+        (item) => item.id === String(searchId)
+      );
 
   // =====================================
   // BUSCAR NFT
@@ -199,10 +195,10 @@ function History() {
              data-baby-orca-history-grid
               >
 
-            {visibleEntries.map(([id, events]) => (
+            {visibleEntries.map((item) => (
 
               <article
-                key={id}
+                key={item.id}
                 style={styles.card}
               >
 
@@ -211,7 +207,7 @@ function History() {
                 <div style={styles.cardHeader}>
 
                   <div style={styles.orcaCircle}>
-                    
+                    ⭐
                   </div>
 
                   <div>
@@ -221,7 +217,7 @@ function History() {
                     </div>
 
                     <div style={styles.tokenNumber}>
-                      #{id}
+                      {item.id}
                     </div>
 
                   </div>
@@ -240,7 +236,7 @@ function History() {
 
                 <div style={styles.events}>
 
-                  {events.map((event, index) => (
+                  {[item].map((event, index) => (
 
                     <div
                       key={index}
@@ -279,10 +275,8 @@ function History() {
                 {/* CARD FOOTER */}
 
                 <div style={styles.cardFooter}>
-                  {events.length}{" "}
-                  {events.length === 1
-                    ? "Historical Achievement"
-                    : "Historical Achievements"}
+                  
+                    1 Historical Achievement
                 </div>
 
               </article>
